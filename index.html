@@ -398,8 +398,11 @@ function formatContent(text) {
 function esc(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function buildApiMessages() {
-  return messages.map((m, i) => {
-    if (m.role === 'user' && i === messages.length - 1 && loadedFiles.length > 0) {
+  // Only attach documents to the FIRST user message, not every message
+  let docsAttached = false;
+  return messages.map((m) => {
+    if (m.role === 'user' && !docsAttached && loadedFiles.length > 0) {
+      docsAttached = true;
       const docs = loadedFiles.map(f => ({ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: f.base64 } }));
       return { role: 'user', content: [...docs, { type: 'text', text: m.content }] };
     }
