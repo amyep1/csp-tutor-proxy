@@ -14,35 +14,41 @@
     }
     body { font-family: 'Jost', sans-serif; background: var(--white); color: var(--black); height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
 
-    /* MODE SELECT */
-    #screen-mode { display: none; flex-direction: column; height: 100dvh; overflow: hidden; }
-    #screen-mode.active { display: flex; }
-    #mode-header { background: var(--volt); padding: 28px 24px 24px; flex-shrink: 0; }
-    #mode-header .ua-label { font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin-bottom: 10px; }
-    #mode-header .title { font-weight: 900; font-size: 24px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--black); line-height: 1.15; }
-    #mode-header .bar { width: 40px; height: 4px; background: var(--black); border-radius: 2px; margin-top: 12px; }
-    #mode-body { flex: 1; background: var(--white); padding: 24px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
-    #mode-body .welcome { font-size: 14px; color: var(--muted); margin-bottom: 4px; line-height: 1.5; }
-    .card { background: var(--white); border: 2px solid var(--black); border-radius: 12px; padding: 18px 20px; cursor: pointer; transition: all 0.18s; }
+    /* SHARED SCREEN STRUCTURE */
+    .flow-screen { display: none; flex-direction: column; height: 100dvh; overflow: hidden; }
+    .flow-screen.active { display: flex; }
+    .flow-header { padding: 24px 24px 20px; flex-shrink: 0; }
+    .flow-header .ua-label { font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin-bottom: 8px; }
+    .flow-header .title { font-weight: 900; font-size: 22px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--black); line-height: 1.15; }
+    .flow-header .bar { width: 36px; height: 4px; background: var(--black); border-radius: 2px; margin-top: 10px; }
+    .flow-body { flex: 1; background: var(--white); padding: 20px 24px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
+    .flow-body .prompt { font-size: 14px; color: var(--muted); margin-bottom: 4px; }
+    .back-btn { background: transparent; border: none; color: var(--muted); font-size: 13px; cursor: pointer; font-family: 'Jost', sans-serif; margin-top: 4px; text-align: left; }
+    .back-btn:hover { color: var(--black); }
+
+    /* CARDS */
+    .card { background: var(--white); border: 2px solid var(--black); border-radius: 12px; padding: 16px 20px; cursor: pointer; transition: all 0.18s; }
     .card:hover { background: var(--blue); border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
     .card .card-label { font-weight: 900; font-size: 15px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--black); transition: color 0.18s; }
-    .card .card-desc { font-size: 13px; color: var(--muted); margin-top: 4px; transition: color 0.18s; }
-    .card:hover .card-label { color: var(--white); }
-    .card:hover .card-desc { color: rgba(255,255,255,0.8); }
+    .card .card-desc { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.4; transition: color 0.18s; }
+    .card:hover .card-label, .card:hover .card-desc { color: var(--white); }
+
+    /* UNIT GRID */
+    .unit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
     /* CHAT */
     #chat-screen { display: none; flex-direction: column; height: 100dvh; overflow: hidden; }
     #chat-screen.active { display: flex; }
-
     #chat-header { padding: 11px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-shrink: 0; }
     #chat-header.student { background: var(--yolk); }
     #chat-header.teacher { background: var(--lilac); }
-    #chat-header-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    #chat-header-left { display: flex; align-items: center; gap: 8px; min-width: 0; flex-wrap: wrap; }
     #mode-badge { font-weight: 900; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; background: var(--black); }
     #mode-badge.student { color: var(--yolk); }
     #mode-badge.teacher { color: var(--lilac); }
-    #curriculum-badge { font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; background: rgba(0,0,0,0.12); color: #444; white-space: nowrap; flex-shrink: 0; transition: all 0.3s; }
-    #curriculum-badge.ready { background: rgba(0,0,0,0.15); color: #111; }
+    #context-badge { font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; background: rgba(0,0,0,0.12); color: #333; white-space: nowrap; flex-shrink: 0; transition: all 0.3s; }
+    #context-badge.ready { background: rgba(0,0,0,0.18); color: #111; }
+    #chat-actions { display: flex; gap: 6px; flex-shrink: 0; }
     .hdr-btn { background: transparent; border: 1.5px solid rgba(0,0,0,0.25); border-radius: 7px; padding: 4px 9px; color: #444; font-size: 11px; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; white-space: nowrap; font-weight: 600; }
     .hdr-btn:hover { border-color: var(--black); color: var(--black); }
 
@@ -57,6 +63,17 @@
     .msg.assistant .msg-bubble { background: var(--surface); color: var(--black); border-bottom-left-radius: 3px; border: 1px solid var(--border); }
     .msg-bubble pre { background: var(--black); color: #cdd6f4; border-radius: 7px; padding: 10px 12px; font-size: 12px; overflow-x: auto; margin: 8px 0; font-family: monospace; white-space: pre; }
     .msg-bubble strong { font-weight: 700; }
+
+    /* Lesson loader UI (teacher) */
+    .lesson-loader { margin: 8px 16px; background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .lesson-loader-header { padding: 10px 14px; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .lesson-loader-header:hover { color: var(--black); }
+    #lesson-list-wrap { display: none; max-height: 200px; overflow-y: auto; border-top: 1px solid var(--border); }
+    .lesson-item { padding: 9px 14px; font-size: 13px; cursor: pointer; border-bottom: 1px solid var(--border); transition: background 0.15s; color: var(--black); }
+    .lesson-item:last-child { border-bottom: none; }
+    .lesson-item:hover { background: var(--blue); color: var(--white); }
+    .lesson-section-hdr { padding: 6px 14px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); background: #eee; border-bottom: 1px solid var(--border); position: sticky; top: 0; }
+    #lesson-search { width: 100%; padding: 8px 14px; font-size: 13px; font-family: 'Jost', sans-serif; border: none; border-bottom: 1px solid var(--border); outline: none; background: var(--white); }
 
     #typing { display: none; align-items: center; gap: 8px; padding: 0 16px 6px; background: var(--white); }
     #typing-avatar { width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 9px; flex-shrink: 0; border: 1.5px solid var(--black); }
@@ -85,15 +102,15 @@
 </head>
 <body>
 
-<!-- MODE SELECT -->
-<div id="screen-mode" class="active">
-  <div id="mode-header">
+<!-- SCREEN 1: MODE -->
+<div class="flow-screen active" id="screen-mode">
+  <div class="flow-header" style="background:var(--volt)">
     <div class="ua-label">Urban Arts</div>
     <div class="title">Game On:<br/>AP CSP through Game Design</div>
     <div class="bar"></div>
   </div>
-  <div id="mode-body">
-    <div class="welcome">Welcome! Consider me your Game On Teaching Assistant. I'm here to think through problems with you.</div>
+  <div class="flow-body">
+    <div class="prompt">Welcome! Consider me your Game On Teaching Assistant. I'm here to think through problems with you.</div>
     <div class="card" onclick="selectMode('student')">
       <div class="card-label">🎮 Student Mode</div>
       <div class="card-desc">Get support as you learn Unity, C#, and AP CSP concepts</div>
@@ -105,20 +122,89 @@
   </div>
 </div>
 
+<!-- SCREEN 2: UNIT (students only) -->
+<div class="flow-screen" id="screen-unit">
+  <div class="flow-header" style="background:var(--volt)">
+    <div class="ua-label">Urban Arts — Student Mode</div>
+    <div class="title">Which unit are<br/>you working on?</div>
+    <div class="bar"></div>
+  </div>
+  <div class="flow-body">
+    <div class="unit-grid">
+      <div class="card" onclick="selectUnit('1')">
+        <div class="card-label">Unit 1</div>
+        <div class="card-desc">Intro to Unity & Game Design</div>
+      </div>
+      <div class="card" onclick="selectUnit('2')">
+        <div class="card-label">Unit 2</div>
+        <div class="card-desc">Variables, Data & Logic</div>
+      </div>
+      <div class="card" onclick="selectUnit('3')">
+        <div class="card-label">Unit 3</div>
+        <div class="card-desc">Algorithms & Programming</div>
+      </div>
+      <div class="card" onclick="selectUnit('4')">
+        <div class="card-label">Unit 4</div>
+        <div class="card-desc">Systems, Networks & Impact</div>
+      </div>
+    </div>
+    <button class="back-btn" onclick="showScreen('screen-mode')">← Back</button>
+  </div>
+</div>
+
+<!-- SCREEN 3: PROJECT (students only) -->
+<div class="flow-screen" id="screen-project">
+  <div class="flow-header" style="background:var(--volt)">
+    <div class="ua-label" id="project-unit-label">Urban Arts — Unit ?</div>
+    <div class="title">What are you<br/>working on?</div>
+    <div class="bar"></div>
+  </div>
+  <div class="flow-body">
+    <div class="card" onclick="selectProject('replicate')">
+      <div class="card-label">🔁 Replicate</div>
+      <div class="card-desc">Following the guide to build the base game</div>
+    </div>
+    <div class="card" onclick="selectProject('modify')">
+      <div class="card-label">✏️ Modify</div>
+      <div class="card-desc">Making changes and customizations to the game</div>
+    </div>
+    <div class="card" onclick="selectProject('create')">
+      <div class="card-label">🚀 Create</div>
+      <div class="card-desc">Building your own original game</div>
+    </div>
+    <button class="back-btn" onclick="showScreen('screen-unit')">← Back</button>
+  </div>
+</div>
+
 <!-- CHAT -->
 <div id="chat-screen">
   <div id="chat-header">
     <div id="chat-header-left">
       <span id="mode-badge">Mode</span>
-      <span id="curriculum-badge">⟳ Loading curriculum…</span>
+      <span id="context-badge">Loading…</span>
     </div>
-    <button class="hdr-btn" onclick="switchMode()">⇄ Switch Mode</button>
+    <div id="chat-actions">
+      <button class="hdr-btn" onclick="showScreen('screen-mode')">⇄ Switch</button>
+    </div>
   </div>
   <div id="messages"></div>
   <div id="typing">
     <div id="typing-avatar">AI</div>
     <div id="typing-bubble"><span></span><span></span><span></span></div>
   </div>
+
+  <!-- Teacher lesson loader -->
+  <div class="lesson-loader" id="lesson-loader" style="display:none">
+    <div class="lesson-loader-header" onclick="toggleLessonList()">
+      <span id="lesson-loader-label">📂 Load a specific lesson</span>
+      <span id="lesson-loader-arrow">▸</span>
+    </div>
+    <div id="lesson-list-wrap">
+      <input type="text" id="lesson-search" placeholder="Search lessons…" oninput="filterLessons(this.value)" />
+      <div id="lesson-list"></div>
+    </div>
+  </div>
+
   <div id="suggestions"></div>
   <div id="input-area">
     <textarea id="input" rows="1" placeholder="Ask a question…"></textarea>
@@ -144,10 +230,10 @@ Your vibe:
 Your method:
 - Never give the answer directly — ask questions that lead them there
 - Break big problems into one small step at a time
-- Use game design analogies whenever possible ("think of a variable like a score counter in a game")
+- Use game design analogies whenever possible
 - If they're totally stuck, give a small nudge hint — but still as a question
 
-If curriculum documents are attached, use them as your primary reference. Otherwise use your built-in knowledge of Unity, C#, and AP CSP.
+If curriculum documents are attached, use them as your primary reference for the specific project guide. Otherwise use your built-in knowledge of Unity, C#, and AP CSP.
 Format: conversational and short. Use markdown code blocks for C#. Always end with a question or next step.`;
 
 const TEACHER_SYSTEM = `You are a knowledgeable, collegial teaching assistant for "Game On: AP CSP through Game Design" at Urban Arts, a national program.
@@ -160,32 +246,55 @@ Your vibe:
 - Never condescending — teachers know their students best, you're just the technical expert
 
 What you're great at:
-- Debugging Unity/C# errors step by step (NullReferenceException, MissingReferenceException, CS errors, collision issues, Input not working, UI not showing, etc.)
-- Translating CS concepts into plain language with great analogies teachers can actually use in class
+- Debugging Unity/C# errors step by step
+- Translating CS concepts into plain language with great analogies
 - Suggesting Socratic hints teachers can give students without spoiling the answer
-- Unity file management and setup headaches
-- Quick lesson support and curriculum questions
+- Unity file management and setup
+- Lesson planning and curriculum questions
 
-If curriculum documents are attached, use them as your primary reference. Otherwise use your built-in knowledge.
+If a lesson document is attached, use it as your primary reference.
 Format: concise, use numbered steps for debugging, bullet points for options. Skip the fluff.`;
 
-const STUDENT_SUGGESTIONS = ["my code isn't working and i don't know why 😭", "what even is a variable?", "my player won't stop falling through the floor", "i don't get loops at all", "nothing is happening when i press play"];
-const TEACHER_SUGGESTIONS = ["Student getting NullReferenceException", "Good analogy for variables?", "Student's collision isn't working", "Hints for loops without giving it away", "Student can't find their Unity project"];
+const STUDENT_SUGGESTIONS = {
+  replicate: ["I'm stuck following the guide", "my code matches but it doesn't work 😭", "I don't understand this step", "what does this error mean?", "nothing happens when I press play"],
+  modify: ["I want to add a new feature but don't know how", "I broke something changing the code", "how do I make the game faster/slower?", "my change isn't working"],
+  create: ["I don't know where to start", "how do I add a new mechanic?", "my idea isn't working in Unity", "how do I make my game feel fun?"]
+};
 
-let mode = null, loadedFiles = [], messages = [];
+const TEACHER_SUGGESTIONS = ["Student getting NullReferenceException", "Good analogy for variables?", "Student's collision isn't working", "Hints for loops without giving it away", "How can I improve this lesson?"];
 
-function switchMode() {
-  messages = []; loadedFiles = [];
+let mode = null, unit = null, project = null;
+let loadedFiles = [], messages = [];
+let allFiles = [], allLessons = [], lessonListOpen = false;
+let pendingLesson = null;
+
+function showScreen(id) {
+  document.querySelectorAll('.flow-screen').forEach(s => s.classList.remove('active'));
   document.getElementById('chat-screen').style.display = 'none';
-  document.getElementById('screen-mode').classList.add('active');
+  if (id === 'chat') { document.getElementById('chat-screen').style.display = 'flex'; }
+  else { document.getElementById(id).classList.add('active'); }
 }
 
 function selectMode(m) {
   mode = m;
-  document.getElementById('screen-mode').classList.remove('active');
-  const chatScreen = document.getElementById('chat-screen');
-  chatScreen.style.display = 'flex';
+  if (m === 'student') { showScreen('screen-unit'); }
+  else { startChat(); }
+}
 
+function selectUnit(u) {
+  unit = u;
+  document.getElementById('project-unit-label').textContent = `Urban Arts — Unit ${u}`;
+  showScreen('screen-project');
+}
+
+async function selectProject(p) {
+  project = p;
+  showScreen('chat');
+  setupChat();
+  loadProjectFiles();
+}
+
+function setupChat() {
   const header = document.getElementById('chat-header');
   header.className = mode;
   const badge = document.getElementById('mode-badge');
@@ -195,22 +304,29 @@ function selectMode(m) {
   ta.className = mode;
   ta.textContent = 'AI';
 
-  document.getElementById('curriculum-badge').textContent = '⟳ Loading curriculum…';
-  document.getElementById('curriculum-badge').classList.remove('ready');
+  const ctx = document.getElementById('context-badge');
+  if (mode === 'student') {
+    ctx.textContent = `Unit ${unit} · ${project.charAt(0).toUpperCase() + project.slice(1)}`;
+  } else {
+    ctx.textContent = 'No lesson loaded';
+  }
+  ctx.classList.remove('ready');
 
-  messages = [];
+  document.getElementById('lesson-loader').style.display = mode === 'teacher' ? 'block' : 'none';
   document.getElementById('messages').innerHTML = '';
+  messages = []; loadedFiles = [];
 
   const greeting = mode === 'student'
-    ? `Hey! 👋 I'm your Game On tutor — think of me like a rubber duck that actually talks back.\n\nI won't just hand you the answer, but I promise we'll figure it out together. Sometimes just explaining what's going wrong is half the battle!\n\nWhat are you working on or stuck on?`
-    : `Hey! 👋 I'm your Game On teaching assistant.\n\nWhat do you need help with?`;
+    ? `Hey! 👋 I'm your Game On tutor — think of me like a rubber duck that actually talks back.\n\nI can see you're working on the **${project.charAt(0).toUpperCase() + project.slice(1)}** project for Unit ${unit}. I won't just hand you the answer, but I promise we'll figure it out together!\n\nWhat are you working on or stuck on?`
+    : `Hey! 👋 I'm your Game On teaching assistant.\n\nWhat do you need help with? You can also load a specific lesson plan below if you want me to reference it!`;
 
   appendMessage('assistant', greeting);
   messages.push({ role: 'assistant', content: greeting });
 
   const sugEl = document.getElementById('suggestions');
   sugEl.innerHTML = '';
-  (mode === 'student' ? STUDENT_SUGGESTIONS : TEACHER_SUGGESTIONS).forEach(s => {
+  const sugs = mode === 'student' ? (STUDENT_SUGGESTIONS[project] || []) : TEACHER_SUGGESTIONS;
+  sugs.forEach(s => {
     const btn = document.createElement('button');
     btn.className = 'suggestion';
     btn.textContent = s;
@@ -219,36 +335,120 @@ function selectMode(m) {
   });
 
   document.getElementById('input').placeholder = mode === 'student'
-    ? 'Ask about a lesson, concept, or project…'
+    ? 'Ask about your project or anything in Unity…'
     : 'Ask about debugging, teaching strategies, or curriculum…';
-
-  loadCurriculumBackground();
 }
 
-async function loadCurriculumBackground() {
+function startChat() {
+  showScreen('chat');
+  setupChat();
+  if (mode === 'teacher') loadAllFilesBackground();
+}
+
+async function loadProjectFiles() {
+  // Fetch file list if needed
+  if (!allFiles.length) {
+    try {
+      const res = await fetch(`${PROXY}?action=list`);
+      const data = await res.json();
+      allFiles = data.files || [];
+    } catch { return; }
+  }
+
+  // Find matching student guide files
+  const keyword = project === 'replicate' ? 'replicate' : project === 'modify' ? 'modify' : 'create';
+  const matches = allFiles.filter(f => {
+    const p = (f.path + '/' + f.name).toLowerCase();
+    return p.includes('student guides') && p.includes(`unit ${unit}`) && p.includes(keyword);
+  });
+
+  if (!matches.length) return;
+
+  try {
+    const loaded = [];
+    for (const f of matches) {
+      const r = await fetch(`${PROXY}?action=fetch&fileId=${encodeURIComponent(f.id)}&mimeType=${encodeURIComponent(f.mimeType)}`);
+      const d = await r.json();
+      if (d.base64) loaded.push({ name: f.name, base64: d.base64 });
+    }
+    loadedFiles = loaded;
+    const ctx = document.getElementById('context-badge');
+    ctx.textContent = `Unit ${unit} · ${project.charAt(0).toUpperCase() + project.slice(1)} · Guide loaded ✓`;
+    ctx.classList.add('ready');
+  } catch { /* silently fail */ }
+}
+
+async function loadAllFilesBackground() {
+  if (allFiles.length) { buildLessonList(); return; }
   try {
     const res = await fetch(`${PROXY}?action=list`);
-    if (!res.ok) throw new Error();
     const data = await res.json();
-    const files = data.files || [];
-    const loaded = [];
-    for (const f of files) {
-      try {
-        const r = await fetch(`${PROXY}?action=fetch&fileId=${encodeURIComponent(f.id)}&mimeType=${encodeURIComponent(f.mimeType)}`);
-        if (!r.ok) continue;
-        const d = await r.json();
-        if (d.base64) loaded.push({ name: f.name, base64: d.base64 });
-      } catch { }
+    allFiles = data.files || [];
+    buildLessonList();
+  } catch { }
+}
+
+function buildLessonList() {
+  allLessons = allFiles.filter(f => f.path.toLowerCase().includes('lesson'));
+  allLessons.sort((a, b) => {
+    const na = parseFloat(a.name.replace(/[^\d.]/g,'')) || 0;
+    const nb = parseFloat(b.name.replace(/[^\d.]/g,'')) || 0;
+    return na - nb;
+  });
+  renderLessons(allLessons);
+}
+
+function toggleLessonList() {
+  lessonListOpen = !lessonListOpen;
+  document.getElementById('lesson-list-wrap').style.display = lessonListOpen ? 'block' : 'none';
+  document.getElementById('lesson-loader-arrow').textContent = lessonListOpen ? '▾' : '▸';
+  if (lessonListOpen && !allLessons.length) loadAllFilesBackground();
+}
+
+function filterLessons(q) {
+  const filtered = allLessons.filter(f => f.name.toLowerCase().includes(q.toLowerCase()));
+  renderLessons(filtered);
+}
+
+function renderLessons(files) {
+  const list = document.getElementById('lesson-list');
+  list.innerHTML = '';
+  let lastUnit = null;
+  files.forEach(f => {
+    const unitMatch = f.path.match(/unit (\d)/i);
+    const u = unitMatch ? unitMatch[1] : '?';
+    if (u !== lastUnit) {
+      const hdr = document.createElement('div');
+      hdr.className = 'lesson-section-hdr';
+      hdr.textContent = `Unit ${u}`;
+      list.appendChild(hdr);
+      lastUnit = u;
     }
-    if (loaded.length > 0) {
-      loadedFiles = loaded;
-      document.getElementById('curriculum-badge').textContent = `✓ ${loaded.length} files loaded`;
-      document.getElementById('curriculum-badge').classList.add('ready');
-    } else {
-      document.getElementById('curriculum-badge').textContent = '⚠ Curriculum unavailable';
+    const item = document.createElement('div');
+    item.className = 'lesson-item';
+    item.textContent = f.name;
+    item.onclick = () => loadLesson(f);
+    list.appendChild(item);
+  });
+}
+
+async function loadLesson(f) {
+  document.getElementById('lesson-loader-label').textContent = `⟳ Loading ${f.name}…`;
+  document.getElementById('lesson-list-wrap').style.display = 'none';
+  lessonListOpen = false;
+  document.getElementById('lesson-loader-arrow').textContent = '▸';
+  try {
+    const r = await fetch(`${PROXY}?action=fetch&fileId=${encodeURIComponent(f.id)}&mimeType=${encodeURIComponent(f.mimeType)}`);
+    const d = await r.json();
+    if (d.base64) {
+      loadedFiles = [{ name: f.name, base64: d.base64 }];
+      pendingLesson = f.name;
+      document.getElementById('lesson-loader-label').textContent = `✓ ${f.name} loaded`;
+      document.getElementById('context-badge').textContent = f.name;
+      document.getElementById('context-badge').classList.add('ready');
     }
   } catch {
-    document.getElementById('curriculum-badge').textContent = '⚠ Curriculum unavailable';
+    document.getElementById('lesson-loader-label').textContent = '⚠ Failed to load — try again';
   }
 }
 
@@ -291,6 +491,7 @@ async function sendMessage(text) {
     messages.push({ role: 'assistant', content: reply });
     typing.style.display = 'none';
     appendMessage('assistant', reply);
+    pendingLesson = null;
   } catch(e) {
     typing.style.display = 'none';
     appendMessage('assistant', '⚠️ Connection error. Please try again.');
