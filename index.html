@@ -172,6 +172,10 @@
       <div class="card-label">🚀 Create</div>
       <div class="card-desc">Building your own original game</div>
     </div>
+    <div class="card" onclick="selectProject('general')">
+      <div class="card-label">💬 Just Chat</div>
+      <div class="card-desc">General questions about Unity, C#, or AP CSP</div>
+    </div>
     <button class="back-btn" onclick="showScreen('screen-unit')">← Back</button>
   </div>
 </div>
@@ -196,7 +200,7 @@
   <!-- Teacher lesson loader -->
   <div class="lesson-loader" id="lesson-loader" style="display:none">
     <div class="lesson-loader-header" onclick="toggleLessonList()">
-      <span id="lesson-loader-label">📂 Load a specific lesson</span>
+      <span id="lesson-loader-label">📂 What lesson are you working on today?</span>
       <span id="lesson-loader-arrow">▸</span>
     </div>
     <div id="lesson-list-wrap">
@@ -258,6 +262,9 @@ Format: concise, use numbered steps for debugging, bullet points for options. Sk
 const STUDENT_SUGGESTIONS = {
   replicate: ["I'm stuck following the guide", "my code matches but it doesn't work 😭", "I don't understand this step", "what does this error mean?", "nothing happens when I press play"],
   modify: ["I want to add a new feature but don't know how", "I broke something changing the code", "how do I make the game faster/slower?", "my change isn't working"],
+  create: ["I don't know where to start", "how do I add a new mechanic?", "my idea isn't working in Unity", "how do I make my game feel fun?"],
+  general: ["my code isn't working and i don't know why 😭", "what even is a variable?", "my player won't stop falling through the floor", "i don't get loops at all", "nothing is happening when i press play"]
+  modify: ["I want to add a new feature but don't know how", "I broke something changing the code", "how do I make the game faster/slower?", "my change isn't working"],
   create: ["I don't know where to start", "how do I add a new mechanic?", "my idea isn't working in Unity", "how do I make my game feel fun?"]
 };
 
@@ -308,7 +315,7 @@ function setupChat() {
   if (mode === 'student') {
     ctx.textContent = `Unit ${unit} · ${project.charAt(0).toUpperCase() + project.slice(1)}`;
   } else {
-    ctx.textContent = 'No lesson loaded';
+    ctx.textContent = '';
   }
   ctx.classList.remove('ready');
 
@@ -317,7 +324,9 @@ function setupChat() {
   messages = []; loadedFiles = [];
 
   const greeting = mode === 'student'
-    ? `Hey! 👋 I'm your Game On tutor — think of me like a rubber duck that actually talks back.\n\nI can see you're working on the **${project.charAt(0).toUpperCase() + project.slice(1)}** project for Unit ${unit}. I won't just hand you the answer, but I promise we'll figure it out together!\n\nWhat are you working on or stuck on?`
+    ? project === 'general'
+      ? `Hey! 👋 I'm your Game On tutor — think of me like a rubber duck that actually talks back.\n\nI won't just hand you the answer, but I promise we'll figure it out together!\n\nWhat are you working on or stuck on?`
+      : `Hey! 👋 I'm your Game On tutor — think of me like a rubber duck that actually talks back.\n\nI can see you're working on the **${project.charAt(0).toUpperCase() + project.slice(1)}** project for Unit ${unit}. I won't just hand you the answer, but I promise we'll figure it out together!\n\nWhat are you working on or stuck on?`
     : `Hey! 👋 I'm your Game On teaching assistant.\n\nWhat do you need help with? You can also load a specific lesson plan below if you want me to reference it!`;
 
   appendMessage('assistant', greeting);
