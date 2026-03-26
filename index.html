@@ -93,14 +93,14 @@
     <div class="bar"></div>
   </div>
   <div id="mode-body">
-    <div class="welcome">Welcome! Consider me your Game On Teaching Assistant — here to think through problems with you.</div>
+    <div class="welcome">Welcome! Consider me your Game On Teaching Assistant. I'm here to think through problems with you.</div>
     <div class="card" onclick="selectMode('student')">
-      <div class="card-label">🎮 I'm a Student</div>
-      <div class="card-desc">Let's think through problems together</div>
+      <div class="card-label">🎮 Student Mode</div>
+      <div class="card-desc">Get support as you learn Unity, C#, and AP CSP concepts</div>
     </div>
     <div class="card" onclick="selectMode('teacher')">
-      <div class="card-label">📋 I'm a Teacher</div>
-      <div class="card-desc">Let's get your classroom unstuck</div>
+      <div class="card-label">👾 Teacher Mode</div>
+      <div class="card-desc">Get direct answers, debugging help, and teaching strategies</div>
     </div>
   </div>
 </div>
@@ -189,7 +189,7 @@ function selectMode(m) {
   const header = document.getElementById('chat-header');
   header.className = mode;
   const badge = document.getElementById('mode-badge');
-  badge.textContent = mode === 'student' ? 'Student' : 'Teacher';
+  badge.textContent = mode === 'student' ? 'Student Mode' : 'Teacher Mode';
   badge.className = mode;
   const ta = document.getElementById('typing-avatar');
   ta.className = mode;
