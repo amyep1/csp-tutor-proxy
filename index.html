@@ -125,7 +125,7 @@
 <!-- SCREEN 2: UNIT (students only) -->
 <div class="flow-screen" id="screen-unit">
   <div class="flow-header" style="background:var(--volt)">
-    <div class="ua-label">Urban Arts — Student Mode</div>
+    <div class="ua-label" id="unit-screen-label">Urban Arts</div>
     <div class="title">Which unit are<br/>you working on?</div>
     <div class="bar"></div>
   </div>
@@ -282,13 +282,12 @@ function showScreen(id) {
 
 function selectMode(m) {
   mode = m;
-  if (m === 'student') { showScreen('screen-unit'); }
-  else { startChat(); }
+  showScreen('screen-unit');
 }
 
 function selectUnit(u) {
   unit = u;
-  document.getElementById('project-unit-label').textContent = `Urban Arts — Unit ${u}`;
+  document.getElementById('unit-screen-label').textContent = `Urban Arts — ${mode === 'student' ? 'Student' : 'Teacher'} Mode`;
   showScreen('screen-project');
 }
 
@@ -313,7 +312,7 @@ function setupChat() {
   if (mode === 'student') {
     ctx.textContent = `Unit ${unit} · ${project.charAt(0).toUpperCase() + project.slice(1)}`;
   } else {
-    ctx.textContent = '';
+    ctx.textContent = `Unit ${unit}`;
   }
   ctx.classList.remove('ready');
 
@@ -325,7 +324,7 @@ function setupChat() {
     ? project === 'general'
       ? `Hey! 👋 I'm your Game On tutor — think of me like a rubber duck that actually talks back.\n\nI won't just hand you the answer, but I promise we'll figure it out together!\n\nWhat are you working on or stuck on?`
       : `Hey! 👋 I'm your Game On tutor — think of me like a rubber duck that actually talks back.\n\nI can see you're working on the **${project.charAt(0).toUpperCase() + project.slice(1)}** project for Unit ${unit}. I won't just hand you the answer, but I promise we'll figure it out together!\n\nWhat are you working on or stuck on?`
-    : `Hey! 👋 I'm your Game On teaching assistant.\n\nWhat do you need help with? You can also load a specific lesson plan below if you want me to reference it!`;
+    : `Hey! 👋 I'm your Game On teaching assistant for Unit ${unit}.\n\nWhat do you need help with? You can also load a specific lesson plan below if you want me to reference it!`;
 
   appendMessage('assistant', greeting);
   messages.push({ role: 'assistant', content: greeting });
