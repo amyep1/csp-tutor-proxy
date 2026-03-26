@@ -8,90 +8,95 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --volt: #C4E44A; --blue: #3070E2; --pumpkin: #F26322;
-      --black: #111111; --white: #ffffff; --muted: #555555;
+      --volt: #C4E44A; --blue: #3070E2; --yolk: #FFE600; --lilac: #D39DB9;
+      --black: #111111; --white: #ffffff; --muted: #666666;
+      --surface: #f5f5f5; --border: #e0e0e0;
     }
-    body { font-family: 'Jost', sans-serif; background: var(--volt); color: var(--black); height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+    body { font-family: 'Jost', sans-serif; background: var(--white); color: var(--black); height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
 
-    .screen { flex: 1; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 24px; overflow-y: auto; background: var(--volt); }
-    .screen.active { display: flex; }
-    .ua-label { font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
-    .screen-title { font-weight: 900; font-size: 26px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--black); text-align: center; line-height: 1.15; }
-    .volt-bar { width: 48px; height: 5px; background: var(--black); border-radius: 3px; }
-    .screen-sub { font-size: 14px; color: var(--muted); text-align: center; }
-
-    .cards { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 520px; }
-    .card { flex: 1; min-width: 200px; background: var(--white); border: 2px solid var(--black); border-radius: 14px; padding: 24px 20px; cursor: pointer; transition: all 0.18s; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
-    .card:hover { background: var(--blue); border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-    .card .card-icon { font-size: 26px; }
-    .card .card-label { font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--black); transition: color 0.18s; }
-    .card .card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; transition: color 0.18s; }
+    /* MODE SELECT */
+    #screen-mode { display: none; flex-direction: column; height: 100dvh; overflow: hidden; }
+    #screen-mode.active { display: flex; }
+    #mode-header { background: var(--volt); padding: 28px 24px 24px; flex-shrink: 0; }
+    #mode-header .ua-label { font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #555; margin-bottom: 10px; }
+    #mode-header .title { font-weight: 900; font-size: 24px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--black); line-height: 1.15; }
+    #mode-header .bar { width: 40px; height: 4px; background: var(--black); border-radius: 2px; margin-top: 12px; }
+    #mode-body { flex: 1; background: var(--white); padding: 24px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
+    #mode-body .welcome { font-size: 14px; color: var(--muted); margin-bottom: 4px; line-height: 1.5; }
+    .card { background: var(--white); border: 2px solid var(--black); border-radius: 12px; padding: 18px 20px; cursor: pointer; transition: all 0.18s; }
+    .card:hover { background: var(--blue); border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+    .card .card-label { font-weight: 900; font-size: 15px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--black); transition: color 0.18s; }
     .card:hover .card-label { color: var(--white); }
-    .card:hover .card-desc { color: rgba(255,255,255,0.75); }
 
     /* CHAT */
     #chat-screen { display: none; flex-direction: column; height: 100dvh; overflow: hidden; }
     #chat-screen.active { display: flex; }
-    #chat-header { padding: 11px 16px; background: var(--black); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-shrink: 0; }
-    #chat-header-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
-    #mode-badge { font-weight: 900; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; background: var(--volt); color: var(--black); }
-    #curriculum-badge { font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; background: #1a1a1a; color: #555; border: 1px solid #333; white-space: nowrap; flex-shrink: 0; transition: color 0.3s; }
-    #curriculum-badge.ready { color: var(--volt); }
-    #chat-actions { display: flex; gap: 6px; flex-shrink: 0; }
-    .hdr-btn { background: transparent; border: 1px solid #444; border-radius: 7px; padding: 4px 9px; color: #aaa; font-size: 11px; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; white-space: nowrap; }
-    .hdr-btn:hover { border-color: var(--volt); color: var(--volt); }
 
-    #messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; background: var(--volt); }
+    #chat-header { padding: 11px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-shrink: 0; }
+    #chat-header.student { background: var(--yolk); }
+    #chat-header.teacher { background: var(--lilac); }
+    #chat-header-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    #mode-badge { font-weight: 900; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; background: var(--black); }
+    #mode-badge.student { color: var(--yolk); }
+    #mode-badge.teacher { color: var(--lilac); }
+    #curriculum-badge { font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; background: rgba(0,0,0,0.12); color: #444; white-space: nowrap; flex-shrink: 0; transition: all 0.3s; }
+    #curriculum-badge.ready { background: rgba(0,0,0,0.15); color: #111; }
+    .hdr-btn { background: transparent; border: 1.5px solid rgba(0,0,0,0.25); border-radius: 7px; padding: 4px 9px; color: #444; font-size: 11px; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; white-space: nowrap; font-weight: 600; }
+    .hdr-btn:hover { border-color: var(--black); color: var(--black); }
+
+    #messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; background: var(--white); }
     .msg { display: flex; }
     .msg.user { justify-content: flex-end; }
-    .msg-avatar { width: 28px; height: 28px; border-radius: 7px; background: var(--black); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 9px; color: var(--volt); margin-right: 8px; margin-top: 2px; flex-shrink: 0; }
+    .msg-avatar { width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 9px; margin-right: 8px; margin-top: 2px; flex-shrink: 0; border: 1.5px solid var(--black); }
+    .msg-avatar.student { background: var(--yolk); color: var(--black); }
+    .msg-avatar.teacher { background: var(--lilac); color: var(--black); }
     .msg-bubble { max-width: 76%; padding: 11px 14px; border-radius: 14px; font-size: 14px; line-height: 1.6; white-space: pre-wrap; }
     .msg.user .msg-bubble { background: var(--blue); color: var(--white); border-bottom-right-radius: 3px; }
-    .msg.assistant .msg-bubble { background: var(--white); color: var(--black); border-bottom-left-radius: 3px; border: 1px solid rgba(0,0,0,0.1); }
+    .msg.assistant .msg-bubble { background: var(--surface); color: var(--black); border-bottom-left-radius: 3px; border: 1px solid var(--border); }
     .msg-bubble pre { background: var(--black); color: #cdd6f4; border-radius: 7px; padding: 10px 12px; font-size: 12px; overflow-x: auto; margin: 8px 0; font-family: monospace; white-space: pre; }
     .msg-bubble strong { font-weight: 700; }
 
-    #typing { display: none; align-items: center; gap: 8px; padding: 0 16px 6px; background: var(--volt); }
-    #typing-avatar { width: 28px; height: 28px; border-radius: 7px; background: var(--black); display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 9px; color: var(--volt); flex-shrink: 0; }
-    #typing-bubble { background: var(--white); padding: 9px 14px; border-radius: 14px; border-bottom-left-radius: 3px; display: flex; gap: 5px; align-items: center; border: 1px solid rgba(0,0,0,0.1); }
+    #typing { display: none; align-items: center; gap: 8px; padding: 0 16px 6px; background: var(--white); }
+    #typing-avatar { width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 9px; flex-shrink: 0; border: 1.5px solid var(--black); }
+    #typing-avatar.student { background: var(--yolk); color: var(--black); }
+    #typing-avatar.teacher { background: var(--lilac); color: var(--black); }
+    #typing-bubble { background: var(--surface); padding: 9px 14px; border-radius: 14px; border-bottom-left-radius: 3px; display: flex; gap: 5px; align-items: center; border: 1px solid var(--border); }
     #typing-bubble span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: bounce 1.2s infinite; display: inline-block; }
     #typing-bubble span:nth-child(2) { animation-delay: 0.2s; }
     #typing-bubble span:nth-child(3) { animation-delay: 0.4s; }
 
-    #suggestions { display: flex; gap: 7px; flex-wrap: wrap; padding: 0 16px 10px; background: var(--volt); }
-    .suggestion { background: transparent; border: 1.5px solid var(--black); color: var(--black); border-radius: 20px; padding: 5px 12px; font-size: 12px; cursor: pointer; transition: all 0.18s; font-family: 'Jost', sans-serif; }
-    .suggestion:hover { background: var(--black); color: var(--volt); }
+    #suggestions { display: flex; gap: 7px; flex-wrap: wrap; padding: 0 16px 10px; background: var(--white); }
+    .suggestion { background: var(--white); border: 1.5px solid var(--border); color: var(--muted); border-radius: 20px; padding: 5px 12px; font-size: 12px; cursor: pointer; transition: all 0.18s; font-family: 'Jost', sans-serif; }
+    .suggestion:hover { border-color: var(--black); color: var(--black); }
 
-    #input-area { padding: 10px 14px; background: var(--volt); border-top: 1px solid rgba(0,0,0,0.1); display: flex; gap: 8px; flex-shrink: 0; }
-    #input { flex: 1; background: var(--white); border: 2px solid var(--black); border-radius: 11px; padding: 9px 13px; color: var(--black); font-size: 14px; resize: none; outline: none; line-height: 1.5; font-family: 'Jost', sans-serif; transition: border-color 0.15s; }
+    #input-area { padding: 10px 14px; background: var(--white); border-top: 1px solid var(--border); display: flex; gap: 8px; flex-shrink: 0; }
+    #input { flex: 1; background: var(--surface); border: 1.5px solid var(--border); border-radius: 11px; padding: 9px 13px; color: var(--black); font-size: 14px; resize: none; outline: none; line-height: 1.5; font-family: 'Jost', sans-serif; transition: border-color 0.15s; }
     #input:focus { border-color: var(--blue); }
-    #send-btn { border: none; border-radius: 11px; width: 42px; height: 42px; color: var(--white); font-size: 17px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s; background: rgba(0,0,0,0.2); }
+    #send-btn { border: none; border-radius: 11px; width: 42px; height: 42px; color: var(--white); font-size: 17px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s; background: var(--border); }
     #send-btn.active { background: var(--blue); }
     #send-btn:disabled { opacity: 0.4; cursor: default; }
 
     @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
-    ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:transparent} ::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.2);border-radius:4px}
+    ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:transparent} ::-webkit-scrollbar-thumb{background:#ddd;border-radius:4px}
     textarea::-webkit-scrollbar{display:none}
   </style>
 </head>
 <body>
 
 <!-- MODE SELECT -->
-<div class="screen active" id="screen-mode">
-  <div class="ua-label">Urban Arts</div>
-  <div class="screen-title">Game On:<br/>AP CSP through Game Design</div>
-  <div class="volt-bar"></div>
-  <div class="screen-sub">Welcome! Who is joining today?</div>
-  <div class="cards">
+<div id="screen-mode" class="active">
+  <div id="mode-header">
+    <div class="ua-label">Urban Arts</div>
+    <div class="title">Game On:<br/>AP CSP through Game Design</div>
+    <div class="bar"></div>
+  </div>
+  <div id="mode-body">
+    <div class="welcome">Welcome! Consider me your Game On Teaching Assistant — here to think through problems with you.</div>
     <div class="card" onclick="selectMode('student')">
-      <div class="card-icon">🎮</div>
       <div class="card-label">I'm a Student</div>
-      <div class="card-desc">Get support and hints on Unity, C#, and AP CSP concepts</div>
     </div>
     <div class="card" onclick="selectMode('teacher')">
-      <div class="card-icon">📋</div>
       <div class="card-label">I'm a Teacher</div>
-      <div class="card-desc">Get direct answers, debugging help, and teaching strategies</div>
     </div>
   </div>
 </div>
@@ -103,9 +108,7 @@
       <span id="mode-badge">Mode</span>
       <span id="curriculum-badge">⟳ Loading curriculum…</span>
     </div>
-    <div id="chat-actions">
-      <button class="hdr-btn" onclick="switchMode()">⇄ Switch Mode</button>
-    </div>
+    <button class="hdr-btn" onclick="switchMode()">⇄ Switch Mode</button>
   </div>
   <div id="messages"></div>
   <div id="typing">
@@ -123,47 +126,52 @@
 const PROXY = '/api/curriculum';
 const API_URL = '/api/curriculum';
 
-const STUDENT_SYSTEM = `You are an expert tutor for "Game On: AP CSP through Game Design" at Urban Arts, a national program. Students are in grades 9-12.
+const STUDENT_SYSTEM = `You are a friendly, upbeat tutor for "Game On: AP CSP through Game Design" at Urban Arts, a national program. Students are in grades 9-12.
 
-Guide students to discover answers themselves — never give answers directly:
-- Ask guiding questions that lead students to the solution
-- Break complex problems into smaller steps
-- Celebrate correct reasoning
-- Give hints as questions, not answers
-- Connect concepts to game design examples
+You're like a rubber duck that talks back — a study buddy who thinks out loud alongside the student. You never just hand over the answer, but you make figuring it out feel totally doable and even fun.
+
+Your vibe:
+- Warm, a little playful, genuinely encouraging — like a cool older sibling who's good at coding
+- Celebrate small wins ("yes! that's exactly it!" or "ooh you're so close!")
+- Normalize confusion ("this one trips everyone up, honestly")
+- Think out loud with them ("ok so let's figure this out together — what does your code do RIGHT before it breaks?")
+- Never make them feel dumb for not knowing something
+
+Your method:
+- Never give the answer directly — ask questions that lead them there
+- Break big problems into one small step at a time
+- Use game design analogies whenever possible ("think of a variable like a score counter in a game")
+- If they're totally stuck, give a small nudge hint — but still as a question
 
 If curriculum documents are attached, use them as your primary reference. Otherwise use your built-in knowledge of Unity, C#, and AP CSP.
-Tone: warm, encouraging, curious. Use game design analogies.
-Format: short paragraphs, C# in markdown code blocks. Keep responses concise.
-Always end with a question that moves the student forward.`;
+Format: conversational and short. Use markdown code blocks for C#. Always end with a question or next step.`;
 
-const TEACHER_SYSTEM = `You are an expert teaching assistant for "Game On: AP CSP through Game Design" at Urban Arts, a national program.
+const TEACHER_SYSTEM = `You are a knowledgeable, collegial teaching assistant for "Game On: AP CSP through Game Design" at Urban Arts, a national program.
 
-Give DIRECT, CLEAR answers. Teachers need fast, actionable help.
-Specialize in:
-- Debugging Unity/C# errors (NullReferenceException, MissingReferenceException, CS errors, etc.)
-- Explaining AP CSP concepts simply with good analogies
-- Suggesting hints for students without giving away answers
-- Unity file management
-- Teaching strategies for game design concepts
+Your vibe:
+- Like an experienced co-teacher who's seen it all and has your back
+- Direct and efficient — teachers are busy, get to the point fast
+- Practical over theoretical — give actionable steps, not essays
+- Occasionally warm and human ("this one catches everyone at first!" or "great instinct to catch that")
+- Never condescending — teachers know their students best, you're just the technical expert
 
-Common issues: NullReferenceException, MissingReferenceException, semicolon errors, type conversion, OnCollisionEnter not firing, Input.GetKeyDown not working, GameObject not moving, UI not showing, Visual Studio not opening, student can't find Unity project.
+What you're great at:
+- Debugging Unity/C# errors step by step (NullReferenceException, MissingReferenceException, CS errors, collision issues, Input not working, UI not showing, etc.)
+- Translating CS concepts into plain language with great analogies teachers can actually use in class
+- Suggesting Socratic hints teachers can give students without spoiling the answer
+- Unity file management and setup headaches
+- Quick lesson support and curriculum questions
 
 If curriculum documents are attached, use them as your primary reference. Otherwise use your built-in knowledge.
-Tone: collegial, practical, efficient. Use numbered steps for debugging.`;
+Format: concise, use numbered steps for debugging, bullet points for options. Skip the fluff.`;
 
-const STUDENT_SUGGESTIONS = ["My player falls through the floor 😭", "What's a variable vs a component?", "How do I make an enemy follow the player?", "I don't get what a loop does", "Why won't my score update?"];
+const STUDENT_SUGGESTIONS = ["my code isn't working and i don't know why 😭", "what even is a variable?", "my player won't stop falling through the floor", "i don't get loops at all", "nothing is happening when i press play"];
 const TEACHER_SUGGESTIONS = ["Student getting NullReferenceException", "Good analogy for variables?", "Student's collision isn't working", "Hints for loops without giving it away", "Student can't find their Unity project"];
 
-let mode = null;
-let loadedFiles = [];
-let curriculumReady = false;
-let messages = [];
+let mode = null, loadedFiles = [], messages = [];
 
 function switchMode() {
-  messages = [];
-  loadedFiles = [];
-  curriculumReady = false;
+  messages = []; loadedFiles = [];
   document.getElementById('chat-screen').style.display = 'none';
   document.getElementById('screen-mode').classList.add('active');
 }
@@ -171,23 +179,31 @@ function switchMode() {
 function selectMode(m) {
   mode = m;
   document.getElementById('screen-mode').classList.remove('active');
-  document.getElementById('chat-screen').style.display = 'flex';
+  const chatScreen = document.getElementById('chat-screen');
+  chatScreen.style.display = 'flex';
 
-  // Set up header
-  document.getElementById('mode-badge').textContent = mode === 'student' ? 'Student' : 'Teacher';
+  const header = document.getElementById('chat-header');
+  header.className = mode;
+  const badge = document.getElementById('mode-badge');
+  badge.textContent = mode === 'student' ? 'Student' : 'Teacher';
+  badge.className = mode;
+  const ta = document.getElementById('typing-avatar');
+  ta.className = mode;
+  ta.textContent = 'AI';
+
   document.getElementById('curriculum-badge').textContent = '⟳ Loading curriculum…';
   document.getElementById('curriculum-badge').classList.remove('ready');
 
-  // Show greeting immediately
   messages = [];
   document.getElementById('messages').innerHTML = '';
+
   const greeting = mode === 'student'
-    ? `Hey! 👋 I'm your Game On tutor.\n\nWhat are you working on or stuck on today?`
+    ? `Hey! 👋 I'm your Game On tutor — think of me like a rubber duck that actually talks back.\n\nI won't just hand you the answer, but I promise we'll figure it out together. Sometimes just explaining what's going wrong is half the battle!\n\nWhat are you working on or stuck on?`
     : `Hey! 👋 I'm your Game On teaching assistant.\n\nWhat do you need help with?`;
+
   appendMessage('assistant', greeting);
   messages.push({ role: 'assistant', content: greeting });
 
-  // Suggestions
   const sugEl = document.getElementById('suggestions');
   sugEl.innerHTML = '';
   (mode === 'student' ? STUDENT_SUGGESTIONS : TEACHER_SUGGESTIONS).forEach(s => {
@@ -202,20 +218,15 @@ function selectMode(m) {
     ? 'Ask about a lesson, concept, or project…'
     : 'Ask about debugging, teaching strategies, or curriculum…';
 
-  // Load curriculum silently in background
   loadCurriculumBackground();
 }
 
 async function loadCurriculumBackground() {
   try {
-    // Step 1: Get file list
     const res = await fetch(`${PROXY}?action=list`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (!res.ok) throw new Error();
     const data = await res.json();
-    if (data.error) throw new Error(data.error);
     const files = data.files || [];
-
-    // Step 2: Load all files silently
     const loaded = [];
     for (const f of files) {
       try {
@@ -223,13 +234,11 @@ async function loadCurriculumBackground() {
         if (!r.ok) continue;
         const d = await r.json();
         if (d.base64) loaded.push({ name: f.name, base64: d.base64 });
-      } catch { /* silently skip failed files */ }
+      } catch { }
     }
-
     if (loaded.length > 0) {
       loadedFiles = loaded;
-      curriculumReady = true;
-      document.getElementById('curriculum-badge').textContent = `✓ ${loaded.length} curriculum files`;
+      document.getElementById('curriculum-badge').textContent = `✓ ${loaded.length} files loaded`;
       document.getElementById('curriculum-badge').classList.add('ready');
     } else {
       document.getElementById('curriculum-badge').textContent = '⚠ Curriculum unavailable';
@@ -240,15 +249,11 @@ async function loadCurriculumBackground() {
 }
 
 function buildApiMessages() {
-  // Attach docs to first user message only
   let docsAttached = false;
   return messages.map(m => {
     if (m.role === 'user' && !docsAttached && loadedFiles.length > 0) {
       docsAttached = true;
-      const docs = loadedFiles.map(f => ({
-        type: 'document',
-        source: { type: 'base64', media_type: 'application/pdf', data: f.base64 }
-      }));
+      const docs = loadedFiles.map(f => ({ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: f.base64 } }));
       return { role: 'user', content: [...docs, { type: 'text', text: m.content }] };
     }
     return { role: m.role, content: m.content };
@@ -272,8 +277,7 @@ async function sendMessage(text) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
+        model: 'claude-sonnet-4-20250514', max_tokens: 1000,
         system: mode === 'student' ? STUDENT_SYSTEM : TEACHER_SYSTEM,
         messages: buildApiMessages()
       })
@@ -295,7 +299,7 @@ function appendMessage(role, content) {
   div.className = `msg ${role}`;
   if (role === 'assistant') {
     const av = document.createElement('div');
-    av.className = 'msg-avatar';
+    av.className = `msg-avatar ${mode}`;
     av.textContent = 'AI';
     div.appendChild(av);
   }
