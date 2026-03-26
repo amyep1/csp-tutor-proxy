@@ -19,10 +19,7 @@
     .screen-title { font-weight: 900; font-size: 26px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--black); text-align: center; line-height: 1.15; }
     .volt-bar { width: 48px; height: 5px; background: var(--black); border-radius: 3px; }
     .screen-sub { font-size: 14px; color: var(--muted); text-align: center; }
-    .back-btn { background: transparent; border: none; color: var(--muted); font-size: 13px; cursor: pointer; font-family: 'Jost', sans-serif; margin-top: 4px; transition: color 0.15s; }
-    .back-btn:hover { color: var(--black); }
 
-    /* MODE CARDS */
     .cards { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 520px; }
     .card { flex: 1; min-width: 200px; background: var(--white); border: 2px solid var(--black); border-radius: 14px; padding: 24px 20px; cursor: pointer; transition: all 0.18s; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
     .card:hover { background: var(--blue); border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
@@ -32,48 +29,14 @@
     .card:hover .card-label { color: var(--white); }
     .card:hover .card-desc { color: rgba(255,255,255,0.75); }
 
-    /* UNIT GRID */
-    .unit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 460px; }
-    .unit-btn { background: var(--white); border: 2px solid var(--black); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.18s; text-align: left; font-family: 'Jost', sans-serif; color: var(--black); }
-    .unit-btn:hover { background: var(--blue); border-color: var(--blue); transform: translateY(-1px); }
-    .unit-btn:hover .u-num, .unit-btn:hover .u-label { color: var(--white); }
-    .unit-btn:hover .u-desc { color: rgba(255,255,255,0.7); }
-    .unit-btn .u-num { font-weight: 900; font-size: 20px; color: var(--black); line-height: 1; transition: color 0.18s; }
-    .unit-btn .u-label { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; transition: color 0.18s; }
-    .unit-btn .u-desc { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; transition: color 0.18s; }
-
-    /* LESSON LIST */
-    #lesson-list-wrap { width: 100%; max-width: 460px; max-height: 52vh; overflow-y: auto; border: 2px solid var(--black); border-radius: 12px; background: var(--white); }
-    .lesson-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid #e8e8e8; cursor: pointer; transition: all 0.15s; }
-    .lesson-item:last-child { border-bottom: none; }
-    .lesson-item:hover { background: var(--blue); }
-    .lesson-item:hover .l-name, .lesson-item:hover .l-arrow { color: var(--white); }
-    .lesson-item:hover .l-path { color: rgba(255,255,255,0.7); }
-    .lesson-item .l-name { font-weight: 600; font-size: 13px; color: var(--black); transition: color 0.15s; }
-    .lesson-item .l-path { font-size: 11px; color: var(--muted); margin-top: 2px; transition: color 0.15s; }
-    .lesson-item .l-arrow { color: #ccc; font-size: 16px; transition: color 0.15s; }
-    .lesson-section-header { padding: 8px 16px; background: #f0f0f0; font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); border-bottom: 1px solid #e8e8e8; position: sticky; top: 0; }
-    #lesson-search { width: 100%; max-width: 460px; background: var(--white); border: 2px solid var(--black); border-radius: 10px; padding: 10px 14px; font-size: 14px; font-family: 'Jost', sans-serif; color: var(--black); outline: none; transition: border-color 0.15s; }
-    #lesson-search:focus { border-color: var(--blue); }
-
-    /* LOADING */
-    #loading { background: var(--volt); }
-    #loading-title { font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--black); }
-    #loading-msg { font-size: 13px; color: var(--muted); text-align: center; max-width: 360px; line-height: 1.6; }
-    #loading-error { font-size: 12px; color: #c0392b; background: #fff; border-radius: 8px; padding: 10px 14px; max-width: 400px; line-height: 1.6; display: none; text-align: center; border: 2px solid #c0392b; }
-    .dots { display: flex; gap: 6px; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--black); animation: bounce 1.2s infinite; }
-    .dot:nth-child(2) { animation-delay: 0.2s; }
-    .dot:nth-child(3) { animation-delay: 0.4s; }
-    #retry-btn { display: none; background: var(--black); border: none; border-radius: 10px; padding: 9px 22px; color: var(--white); font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Jost', sans-serif; text-transform: uppercase; letter-spacing: 0.08em; }
-
     /* CHAT */
     #chat-screen { display: none; flex-direction: column; height: 100dvh; overflow: hidden; }
     #chat-screen.active { display: flex; }
     #chat-header { padding: 11px 16px; background: var(--black); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-shrink: 0; }
     #chat-header-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
     #mode-badge { font-weight: 900; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; background: var(--volt); color: var(--black); }
-    #context-badge { font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; background: #1a1a1a; color: var(--blue); border: 1px solid #333; white-space: nowrap; flex-shrink: 0; max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
+    #curriculum-badge { font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; background: #1a1a1a; color: #555; border: 1px solid #333; white-space: nowrap; flex-shrink: 0; transition: color 0.3s; }
+    #curriculum-badge.ready { color: var(--volt); }
     #chat-actions { display: flex; gap: 6px; flex-shrink: 0; }
     .hdr-btn { background: transparent; border: 1px solid #444; border-radius: 7px; padding: 4px 9px; color: #aaa; font-size: 11px; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; white-space: nowrap; }
     .hdr-btn:hover { border-color: var(--volt); color: var(--volt); }
@@ -113,7 +76,7 @@
 </head>
 <body>
 
-<!-- SCREEN 1: MODE -->
+<!-- MODE SELECT -->
 <div class="screen active" id="screen-mode">
   <div class="ua-label">Urban Arts</div>
   <div class="screen-title">Game On:<br/>AP CSP through Game Design</div>
@@ -133,65 +96,15 @@
   </div>
 </div>
 
-<!-- SCREEN 2: UNIT -->
-<div class="screen" id="screen-unit">
-  <div class="ua-label">Urban Arts</div>
-  <div class="screen-title">Which unit?</div>
-  <div class="volt-bar"></div>
-  <div class="unit-grid">
-    <div class="unit-btn" onclick="selectUnit('1')">
-      <div class="u-num">01</div>
-      <div class="u-label">Unit 1</div>
-      <div class="u-desc">Intro to Unity & Game Design</div>
-    </div>
-    <div class="unit-btn" onclick="selectUnit('2')">
-      <div class="u-num">02</div>
-      <div class="u-label">Unit 2</div>
-      <div class="u-desc">Variables, Data & Logic</div>
-    </div>
-    <div class="unit-btn" onclick="selectUnit('3')">
-      <div class="u-num">03</div>
-      <div class="u-label">Unit 3</div>
-      <div class="u-desc">Algorithms & Programming</div>
-    </div>
-    <div class="unit-btn" onclick="selectUnit('4')">
-      <div class="u-num">04</div>
-      <div class="u-label">Unit 4</div>
-      <div class="u-desc">Systems, Networks & Impact</div>
-    </div>
-  </div>
-  <button class="back-btn" onclick="showScreen('screen-mode')">← Back</button>
-</div>
-
-<!-- SCREEN 3: LESSON -->
-<div class="screen" id="screen-lesson">
-  <div class="ua-label">Urban Arts</div>
-  <div class="screen-title">Which lesson?</div>
-  <div class="volt-bar"></div>
-  <input type="text" id="lesson-search" placeholder="Search lessons…" oninput="filterLessons(this.value)" />
-  <div id="lesson-list-wrap"><div id="lesson-list"></div></div>
-  <button class="back-btn" onclick="showScreen('screen-unit')">← Back</button>
-</div>
-
-<!-- SCREEN 4: LOADING -->
-<div class="screen" id="loading">
-  <div id="loading-title">Loading…</div>
-  <div id="loading-msg">Fetching your lesson files…</div>
-  <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-  <div id="loading-error"></div>
-  <button id="retry-btn" onclick="retryLoad()">↻ Retry</button>
-</div>
-
 <!-- CHAT -->
 <div id="chat-screen">
   <div id="chat-header">
     <div id="chat-header-left">
       <span id="mode-badge">Mode</span>
-      <span id="context-badge">Lesson</span>
+      <span id="curriculum-badge">⟳ Loading curriculum…</span>
     </div>
     <div id="chat-actions">
-      <button class="hdr-btn" onclick="showScreen('screen-lesson')">⇄ Lesson</button>
-      <button class="hdr-btn" onclick="showScreen('screen-mode')">⇄ Mode</button>
+      <button class="hdr-btn" onclick="switchMode()">⇄ Switch Mode</button>
     </div>
   </div>
   <div id="messages"></div>
@@ -219,7 +132,7 @@ Guide students to discover answers themselves — never give answers directly:
 - Give hints as questions, not answers
 - Connect concepts to game design examples
 
-Use the attached curriculum documents as your primary reference.
+If curriculum documents are attached, use them as your primary reference. Otherwise use your built-in knowledge of Unity, C#, and AP CSP.
 Tone: warm, encouraging, curious. Use game design analogies.
 Format: short paragraphs, C# in markdown code blocks. Keep responses concise.
 Always end with a question that moves the student forward.`;
@@ -236,125 +149,45 @@ Specialize in:
 
 Common issues: NullReferenceException, MissingReferenceException, semicolon errors, type conversion, OnCollisionEnter not firing, Input.GetKeyDown not working, GameObject not moving, UI not showing, Visual Studio not opening, student can't find Unity project.
 
+If curriculum documents are attached, use them as your primary reference. Otherwise use your built-in knowledge.
 Tone: collegial, practical, efficient. Use numbered steps for debugging.`;
 
-const STUDENT_SUGGESTIONS = ["My player falls through the floor 😭","What's a variable vs a component?","How do I make an enemy follow the player?","I don't get what a loop does","Why won't my score update?"];
-const TEACHER_SUGGESTIONS = ["Student getting NullReferenceException","Good analogy for variables?","Student's collision isn't working","Hints for loops without giving it away","Student can't find their Unity project"];
+const STUDENT_SUGGESTIONS = ["My player falls through the floor 😭", "What's a variable vs a component?", "How do I make an enemy follow the player?", "I don't get what a loop does", "Why won't my score update?"];
+const TEACHER_SUGGESTIONS = ["Student getting NullReferenceException", "Good analogy for variables?", "Student's collision isn't working", "Hints for loops without giving it away", "Student can't find their Unity project"];
 
-let mode = null, unit = null, selectedLesson = null;
-let allFiles = [], loadedFiles = [], messages = [];
-let allLessons = [], filteredLessons = [];
+let mode = null;
+let loadedFiles = [];
+let curriculumReady = false;
+let messages = [];
 
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('chat-screen').style.display = 'none';
-  if (id === 'chat') { document.getElementById('chat-screen').style.display = 'flex'; }
-  else { document.getElementById(id).classList.add('active'); }
-  if (id === 'screen-mode' || id === 'screen-unit') { messages = []; loadedFiles = []; }
-}
-
-function selectMode(m) { mode = m; showScreen('screen-unit'); }
-
-async function selectUnit(u) {
-  unit = u;
-  if (!allFiles.length) {
-    showScreen('loading');
-    document.getElementById('loading-msg').textContent = 'Scanning curriculum folder…';
-    try {
-      const res = await fetch(`${PROXY}?action=list`);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
-      allFiles = data.files || [];
-    } catch(e) {
-      document.getElementById('loading-error').textContent = e.message;
-      document.getElementById('loading-error').style.display = 'block';
-      document.getElementById('retry-btn').style.display = 'block';
-      return;
-    }
-  }
-  buildLessonList(u);
-  showScreen('screen-lesson');
-}
-
-function buildLessonList(u) {
-  const unitFiles = allFiles.filter(f => {
-    const p = (f.path + '/' + f.name).toLowerCase();
-    return (p.includes(`unit ${u}/`) || p.includes(`unit${u}/`)) && p.includes('lesson');
-  });
-  unitFiles.sort((a, b) => {
-    const na = parseFloat(a.name.replace(/[^\d.]/g, '')) || 0;
-    const nb = parseFloat(b.name.replace(/[^\d.]/g, '')) || 0;
-    return na - nb;
-  });
-  allLessons = unitFiles;
-  filteredLessons = unitFiles;
-  document.getElementById('lesson-search').value = '';
-  renderLessons(unitFiles);
-}
-
-function renderLessons(files) {
-  const list = document.getElementById('lesson-list');
-  list.innerHTML = '';
-  if (!files.length) {
-    list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:13px">No lessons found.</div>';
-    return;
-  }
-  const hdr = document.createElement('div');
-  hdr.className = 'lesson-section-header';
-  hdr.textContent = `Unit ${unit} Lessons`;
-  list.appendChild(hdr);
-  files.forEach(f => {
-    const item = document.createElement('div');
-    item.className = 'lesson-item';
-    item.innerHTML = `<div><div class="l-name">${f.name}</div><div class="l-path">${f.path}</div></div><div class="l-arrow">→</div>`;
-    item.onclick = () => selectLesson(f);
-    list.appendChild(item);
-  });
-}
-
-function filterLessons(q) {
-  filteredLessons = allLessons.filter(f => f.name.toLowerCase().includes(q.toLowerCase()));
-  renderLessons(filteredLessons);
-}
-
-async function selectLesson(lessonFile) {
-  selectedLesson = lessonFile;
-  showScreen('loading');
-  document.getElementById('loading-msg').textContent = `Loading ${lessonFile.name}…`;
-  document.getElementById('loading-error').style.display = 'none';
-  document.getElementById('retry-btn').style.display = 'none';
-  loadedFiles = [];
-  try {
-    const r = await fetch(`${PROXY}?action=fetch&fileId=${encodeURIComponent(lessonFile.id)}&mimeType=${encodeURIComponent(lessonFile.mimeType)}`);
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    const d = await r.json();
-    if (d.error) throw new Error(d.error);
-    loadedFiles.push({ name: lessonFile.name, base64: d.base64 });
-    startChat();
-  } catch(e) {
-    document.getElementById('loading-msg').textContent = 'Failed to load lesson.';
-    document.getElementById('loading-error').textContent = e.message;
-    document.getElementById('loading-error').style.display = 'block';
-    document.getElementById('retry-btn').style.display = 'block';
-  }
-}
-
-function retryLoad() { if (selectedLesson) selectLesson(selectedLesson); }
-
-function startChat() {
-  document.getElementById('mode-badge').textContent = mode === 'student' ? 'Student' : 'Teacher';
-  document.getElementById('context-badge').textContent = selectedLesson?.name || 'General';
-  document.getElementById('input').placeholder = mode === 'student'
-    ? 'Ask about this lesson or concept…'
-    : 'Ask about debugging, teaching strategies, or this lesson…';
-  document.getElementById('messages').innerHTML = '';
+function switchMode() {
   messages = [];
+  loadedFiles = [];
+  curriculumReady = false;
+  document.getElementById('chat-screen').style.display = 'none';
+  document.getElementById('screen-mode').classList.add('active');
+}
+
+function selectMode(m) {
+  mode = m;
+  document.getElementById('screen-mode').classList.remove('active');
+  document.getElementById('chat-screen').style.display = 'flex';
+
+  // Set up header
+  document.getElementById('mode-badge').textContent = mode === 'student' ? 'Student' : 'Teacher';
+  document.getElementById('curriculum-badge').textContent = '⟳ Loading curriculum…';
+  document.getElementById('curriculum-badge').classList.remove('ready');
+
+  // Show greeting immediately
+  messages = [];
+  document.getElementById('messages').innerHTML = '';
   const greeting = mode === 'student'
-    ? `Hey! 👋 I'm your Game On tutor. I've loaded **${selectedLesson?.name}** — let's work through it together.\n\nWhat are you working on or stuck on?`
-    : `Hey! 👋 I'm your Game On teaching assistant. I've loaded **${selectedLesson?.name}**.\n\nWhat do you need?`;
+    ? `Hey! 👋 I'm your Game On tutor.\n\nWhat are you working on or stuck on today?`
+    : `Hey! 👋 I'm your Game On teaching assistant.\n\nWhat do you need help with?`;
   appendMessage('assistant', greeting);
   messages.push({ role: 'assistant', content: greeting });
+
+  // Suggestions
   const sugEl = document.getElementById('suggestions');
   sugEl.innerHTML = '';
   (mode === 'student' ? STUDENT_SUGGESTIONS : TEACHER_SUGGESTIONS).forEach(s => {
@@ -364,7 +197,96 @@ function startChat() {
     btn.onclick = () => { sugEl.innerHTML = ''; sendMessage(s); };
     sugEl.appendChild(btn);
   });
-  showScreen('chat');
+
+  document.getElementById('input').placeholder = mode === 'student'
+    ? 'Ask about a lesson, concept, or project…'
+    : 'Ask about debugging, teaching strategies, or curriculum…';
+
+  // Load curriculum silently in background
+  loadCurriculumBackground();
+}
+
+async function loadCurriculumBackground() {
+  try {
+    // Step 1: Get file list
+    const res = await fetch(`${PROXY}?action=list`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    const files = data.files || [];
+
+    // Step 2: Load all files silently
+    const loaded = [];
+    for (const f of files) {
+      try {
+        const r = await fetch(`${PROXY}?action=fetch&fileId=${encodeURIComponent(f.id)}&mimeType=${encodeURIComponent(f.mimeType)}`);
+        if (!r.ok) continue;
+        const d = await r.json();
+        if (d.base64) loaded.push({ name: f.name, base64: d.base64 });
+      } catch { /* silently skip failed files */ }
+    }
+
+    if (loaded.length > 0) {
+      loadedFiles = loaded;
+      curriculumReady = true;
+      document.getElementById('curriculum-badge').textContent = `✓ ${loaded.length} curriculum files`;
+      document.getElementById('curriculum-badge').classList.add('ready');
+    } else {
+      document.getElementById('curriculum-badge').textContent = '⚠ Curriculum unavailable';
+    }
+  } catch {
+    document.getElementById('curriculum-badge').textContent = '⚠ Curriculum unavailable';
+  }
+}
+
+function buildApiMessages() {
+  // Attach docs to first user message only
+  let docsAttached = false;
+  return messages.map(m => {
+    if (m.role === 'user' && !docsAttached && loadedFiles.length > 0) {
+      docsAttached = true;
+      const docs = loadedFiles.map(f => ({
+        type: 'document',
+        source: { type: 'base64', media_type: 'application/pdf', data: f.base64 }
+      }));
+      return { role: 'user', content: [...docs, { type: 'text', text: m.content }] };
+    }
+    return { role: m.role, content: m.content };
+  });
+}
+
+async function sendMessage(text) {
+  const input = document.getElementById('input');
+  const userMsg = text || input.value.trim();
+  if (!userMsg) return;
+  input.value = '';
+  updateSendBtn('');
+  document.getElementById('suggestions').innerHTML = '';
+  messages.push({ role: 'user', content: userMsg });
+  appendMessage('user', userMsg);
+  const typing = document.getElementById('typing');
+  typing.style.display = 'flex';
+  document.getElementById('messages').scrollTop = 99999;
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: mode === 'student' ? STUDENT_SYSTEM : TEACHER_SYSTEM,
+        messages: buildApiMessages()
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.find(b => b.type === 'text')?.text || 'Something went wrong — please try again.';
+    messages.push({ role: 'assistant', content: reply });
+    typing.style.display = 'none';
+    appendMessage('assistant', reply);
+  } catch(e) {
+    typing.style.display = 'none';
+    appendMessage('assistant', '⚠️ Connection error. Please try again.');
+  }
 }
 
 function appendMessage(role, content) {
@@ -396,52 +318,6 @@ function formatContent(text) {
 }
 
 function esc(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-function buildApiMessages() {
-  // Only attach documents to the FIRST user message, not every message
-  let docsAttached = false;
-  return messages.map((m) => {
-    if (m.role === 'user' && !docsAttached && loadedFiles.length > 0) {
-      docsAttached = true;
-      const docs = loadedFiles.map(f => ({ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: f.base64 } }));
-      return { role: 'user', content: [...docs, { type: 'text', text: m.content }] };
-    }
-    return { role: m.role, content: m.content };
-  });
-}
-
-async function sendMessage(text) {
-  const input = document.getElementById('input');
-  const userMsg = text || input.value.trim();
-  if (!userMsg) return;
-  input.value = '';
-  updateSendBtn('');
-  document.getElementById('suggestions').innerHTML = '';
-  messages.push({ role: 'user', content: userMsg });
-  appendMessage('user', userMsg);
-  const typing = document.getElementById('typing');
-  typing.style.display = 'flex';
-  document.getElementById('messages').scrollTop = 99999;
-  try {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514', max_tokens: 1000,
-        system: mode === 'student' ? STUDENT_SYSTEM : TEACHER_SYSTEM,
-        messages: buildApiMessages()
-      })
-    });
-    const data = await res.json();
-    const reply = data.content?.find(b => b.type === 'text')?.text || 'Something went wrong — please try again.';
-    messages.push({ role: 'assistant', content: reply });
-    typing.style.display = 'none';
-    appendMessage('assistant', reply);
-  } catch(e) {
-    typing.style.display = 'none';
-    appendMessage('assistant', '⚠️ Connection error. Please try again.');
-  }
-}
 
 function updateSendBtn(val) {
   const btn = document.getElementById('send-btn');
