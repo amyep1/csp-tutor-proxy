@@ -8,141 +8,148 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --volt: #C4E44A; --blue: #3070E2; --lilac: #D39DB9;
-      --pumpkin: #F26322; --yolk: #FFE600;
-      --bg: #0e0e0e; --surface: #1a1a1a; --surface2: #242424;
-      --border: #2e2e2e; --text: #f0f0f0; --muted: #888;
+      --volt: #C4E44A; --blue: #3070E2; --pumpkin: #F26322;
+      --bg: #ffffff; --surface: #f5f5f5; --surface2: #eeeeee;
+      --border: #e0e0e0; --text: #111111; --muted: #777777; --black: #111111;
     }
     body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--text); height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
 
-    /* SCREENS */
-    .screen { flex: 1; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 24px; overflow-y: auto; }
+    .screen { flex: 1; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 24px; overflow-y: auto; }
     .screen.active { display: flex; }
-
-    /* SHARED HEADER LABEL */
-    .ua-label { font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--volt); }
-    .screen-title { font-weight: 900; font-size: 24px; text-transform: uppercase; letter-spacing: 0.08em; color: #fff; text-align: center; line-height: 1.2; }
-    .screen-title span { color: var(--volt); }
+    .ua-label { font-weight: 900; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .screen-title { font-weight: 900; font-size: 26px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--black); text-align: center; line-height: 1.15; }
+    .screen-title span { color: var(--blue); }
+    .volt-bar { width: 48px; height: 5px; background: var(--volt); border-radius: 3px; }
     .screen-sub { font-size: 14px; color: var(--muted); text-align: center; }
+    .back-btn { background: transparent; border: none; color: var(--muted); font-size: 13px; cursor: pointer; font-family: 'Jost', sans-serif; margin-top: 4px; }
+    .back-btn:hover { color: var(--black); }
 
     /* MODE CARDS */
-    .cards { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 560px; }
-    .card { flex: 1; min-width: 200px; background: var(--surface); border: 2px solid var(--border); border-radius: 16px; padding: 24px 20px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
-    .card:hover { transform: translateY(-2px); }
-    .card .card-icon { font-size: 32px; }
-    .card .card-label { font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; }
-    .card .card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
-    .card.blue:hover { border-color: var(--blue); }
-    .card.orange:hover { border-color: var(--pumpkin); }
+    .cards { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 540px; }
+    .card { flex: 1; min-width: 200px; background: var(--black); border: 2px solid var(--black); border-radius: 14px; padding: 26px 20px; cursor: pointer; transition: all 0.18s; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .card .card-icon { font-size: 28px; }
+    .card .card-label { font-weight: 900; font-size: 15px; text-transform: uppercase; letter-spacing: 0.1em; color: #fff; }
+    .card .card-accent { width: 32px; height: 4px; border-radius: 2px; }
+    .card .card-desc { font-size: 12px; color: #aaa; line-height: 1.5; }
+    .card.student .card-accent { background: var(--volt); }
+    .card.teacher .card-accent { background: var(--pumpkin); }
+    .card.student:hover { border-color: var(--volt); }
+    .card.teacher:hover { border-color: var(--pumpkin); }
 
-    /* UNIT SELECTOR */
-    .unit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 480px; }
-    .unit-btn { background: var(--surface); border: 2px solid var(--border); border-radius: 12px; padding: 18px 16px; cursor: pointer; transition: all 0.2s; text-align: left; font-family: 'Jost', sans-serif; color: var(--text); }
-    .unit-btn:hover { border-color: var(--volt); transform: translateY(-1px); }
-    .unit-btn.all { grid-column: 1 / -1; border-color: #333; }
-    .unit-btn.all:hover { border-color: var(--volt); }
-    .unit-btn .u-num { font-weight: 900; font-size: 22px; color: var(--volt); line-height: 1; }
-    .unit-btn .u-label { font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
-    .unit-btn .u-desc { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
-    .unit-btn.all .u-num { font-size: 18px; }
-    .back-btn { background: transparent; border: none; color: var(--muted); font-size: 13px; cursor: pointer; font-family: 'Jost', sans-serif; }
-    .back-btn:hover { color: var(--text); }
+    /* UNIT SELECT */
+    .unit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 460px; }
+    .unit-btn { background: var(--bg); border: 2px solid var(--border); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.18s; text-align: left; font-family: 'Jost', sans-serif; color: var(--text); }
+    .unit-btn:hover, .unit-btn.selected { border-color: var(--black); background: var(--black); color: #fff; }
+    .unit-btn:hover .u-desc, .unit-btn.selected .u-desc { color: #aaa; }
+    .unit-btn:hover .u-num, .unit-btn.selected .u-num { color: var(--volt); }
+    .unit-btn .u-num { font-weight: 900; font-size: 20px; color: var(--blue); line-height: 1; }
+    .unit-btn .u-label { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px; }
+    .unit-btn .u-desc { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+    /* LESSON LIST */
+    #lesson-list-wrap { width: 100%; max-width: 460px; max-height: 55vh; overflow-y: auto; border: 1.5px solid var(--border); border-radius: 12px; }
+    .lesson-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.15s; }
+    .lesson-item:last-child { border-bottom: none; }
+    .lesson-item:hover { background: var(--surface); }
+    .lesson-item .l-name { font-weight: 600; font-size: 13px; }
+    .lesson-item .l-path { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .lesson-item .l-arrow { color: var(--muted); font-size: 16px; }
+    .lesson-item:hover .l-arrow { color: var(--black); }
+    .lesson-section-header { padding: 8px 16px; background: var(--surface2); font-weight: 900; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); border-bottom: 1px solid var(--border); position: sticky; top: 0; }
+    #lesson-search { width: 100%; max-width: 460px; background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 14px; font-size: 14px; font-family: 'Jost', sans-serif; color: var(--text); outline: none; }
+    #lesson-search:focus { border-color: var(--black); }
 
     /* LOADING */
     #loading { background: var(--bg); }
-    #loading-title { font-weight: 900; font-size: 15px; text-transform: uppercase; letter-spacing: 0.1em; color: #fff; }
+    #loading-title { font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--black); }
     #loading-msg { font-size: 13px; color: var(--muted); text-align: center; max-width: 360px; line-height: 1.6; }
-    #loading-error { font-size: 12px; color: #f08080; background: #2e1a1a; border-radius: 8px; padding: 10px 14px; max-width: 400px; line-height: 1.6; display: none; text-align: center; }
+    #loading-error { font-size: 12px; color: #c0392b; background: #fdf0ee; border-radius: 8px; padding: 10px 14px; max-width: 400px; line-height: 1.6; display: none; text-align: center; border: 1px solid #f5c6c0; }
     .dots { display: flex; gap: 6px; }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--volt); animation: bounce 1.2s infinite; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--black); animation: bounce 1.2s infinite; }
     .dot:nth-child(2) { animation-delay: 0.2s; }
     .dot:nth-child(3) { animation-delay: 0.4s; }
-    #retry-btn { display: none; background: var(--volt); border: none; border-radius: 10px; padding: 9px 22px; color: #000; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Jost', sans-serif; text-transform: uppercase; letter-spacing: 0.08em; }
-    #log-toggle { display: none; background: transparent; border: none; color: var(--muted); font-size: 12px; cursor: pointer; font-family: 'Jost', sans-serif; }
-    #file-log { display: none; background: #111; border-radius: 10px; padding: 10px 14px; font-size: 11px; max-height: 120px; overflow-y: auto; line-height: 1.8; font-family: monospace; width: 100%; max-width: 420px; }
+    #retry-btn { display: none; background: var(--black); border: none; border-radius: 10px; padding: 9px 22px; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Jost', sans-serif; text-transform: uppercase; letter-spacing: 0.08em; }
 
-    /* CHAT LAYOUT */
+    /* CHAT */
     #chat-screen { display: none; flex-direction: column; height: 100dvh; overflow: hidden; }
     #chat-screen.active { display: flex; }
-
-    /* CHAT HEADER */
-    #chat-header { padding: 11px 16px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-shrink: 0; }
-    #chat-header-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    #chat-header { padding: 11px 16px; background: var(--black); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-shrink: 0; }
+    #chat-header-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
     #mode-badge { font-weight: 900; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
-    #mode-badge.student { background: var(--blue); color: #fff; }
+    #mode-badge.student { background: var(--volt); color: var(--black); }
     #mode-badge.teacher { background: var(--pumpkin); color: #fff; }
-    #unit-badge { font-weight: 700; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; background: #222; color: var(--volt); border: 1px solid #333; white-space: nowrap; flex-shrink: 0; }
-    #chat-title { font-weight: 900; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #context-badge { font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; background: #222; color: #aaa; border: 1px solid #333; white-space: nowrap; flex-shrink: 0; max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
     #chat-actions { display: flex; gap: 6px; flex-shrink: 0; }
-    .hdr-btn { background: transparent; border: 1px solid var(--border); border-radius: 7px; padding: 4px 9px; color: var(--muted); font-size: 11px; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; white-space: nowrap; }
+    .hdr-btn { background: transparent; border: 1px solid #444; border-radius: 7px; padding: 4px 9px; color: #aaa; font-size: 11px; cursor: pointer; font-family: 'Jost', sans-serif; transition: all 0.2s; white-space: nowrap; }
     .hdr-btn:hover { border-color: var(--volt); color: var(--volt); }
 
-    /* MESSAGES */
-    #messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    #messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; background: var(--bg); }
     .msg { display: flex; }
     .msg.user { justify-content: flex-end; }
-    .msg-avatar { width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 9px; letter-spacing: 0.04em; margin-right: 8px; margin-top: 2px; flex-shrink: 0; text-transform: uppercase; }
-    .msg-bubble { max-width: 76%; padding: 10px 13px; border-radius: 13px; font-size: 14px; line-height: 1.6; box-shadow: 0 2px 6px rgba(0,0,0,0.25); white-space: pre-wrap; }
+    .msg-avatar { width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 9px; margin-right: 8px; margin-top: 2px; flex-shrink: 0; }
+    .msg-bubble { max-width: 76%; padding: 11px 14px; border-radius: 14px; font-size: 14px; line-height: 1.6; white-space: pre-wrap; }
     .msg.user .msg-bubble { color: #fff; border-bottom-right-radius: 3px; }
     .msg.user.student .msg-bubble { background: var(--blue); }
     .msg.user.teacher .msg-bubble { background: var(--pumpkin); }
-    .msg.assistant .msg-bubble { background: var(--surface2); color: #e0e0f0; border-bottom-left-radius: 3px; }
-    .msg-bubble pre { background: #111; color: #cdd6f4; border-radius: 7px; padding: 10px 12px; font-size: 12px; overflow-x: auto; margin: 8px 0; font-family: monospace; white-space: pre; }
-    #typing { display: none; align-items: center; gap: 8px; padding: 0 16px 6px; }
+    .msg.assistant .msg-bubble { background: var(--surface); color: var(--text); border-bottom-left-radius: 3px; border: 1px solid var(--border); }
+    .msg-bubble pre { background: var(--black); color: #cdd6f4; border-radius: 7px; padding: 10px 12px; font-size: 12px; overflow-x: auto; margin: 8px 0; font-family: monospace; white-space: pre; }
+    .msg-bubble strong { font-weight: 700; }
+
+    #typing { display: none; align-items: center; gap: 8px; padding: 0 16px 6px; background: var(--bg); }
     #typing-avatar { width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 9px; flex-shrink: 0; }
-    #typing-bubble { background: var(--surface2); padding: 9px 14px; border-radius: 13px; border-bottom-left-radius: 3px; display: flex; gap: 5px; align-items: center; }
-    #typing-bubble span { width: 6px; height: 6px; border-radius: 50%; animation: bounce 1.2s infinite; display: inline-block; }
+    #typing-bubble { background: var(--surface); padding: 9px 14px; border-radius: 14px; border-bottom-left-radius: 3px; display: flex; gap: 5px; align-items: center; border: 1px solid var(--border); }
+    #typing-bubble span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: bounce 1.2s infinite; display: inline-block; }
     #typing-bubble span:nth-child(2) { animation-delay: 0.2s; }
     #typing-bubble span:nth-child(3) { animation-delay: 0.4s; }
 
-    #suggestions { display: flex; gap: 7px; flex-wrap: wrap; padding: 0 16px 8px; }
-    .suggestion { background: var(--surface); border: 1px solid var(--border); color: #999; border-radius: 20px; padding: 5px 11px; font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: 'Jost', sans-serif; }
-    .suggestion.student:hover { border-color: var(--blue); color: #fff; }
-    .suggestion.teacher:hover { border-color: var(--pumpkin); color: #fff; }
+    #suggestions { display: flex; gap: 7px; flex-wrap: wrap; padding: 0 16px 10px; background: var(--bg); }
+    .suggestion { background: var(--bg); border: 1.5px solid var(--border); color: var(--muted); border-radius: 20px; padding: 5px 12px; font-size: 12px; cursor: pointer; transition: all 0.18s; font-family: 'Jost', sans-serif; }
+    .suggestion:hover { border-color: var(--black); color: var(--black); }
 
-    #input-area { padding: 10px 14px; background: var(--surface); border-top: 1px solid var(--border); display: flex; gap: 8px; flex-shrink: 0; }
-    #input { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 11px; padding: 9px 13px; color: var(--text); font-size: 14px; resize: none; outline: none; line-height: 1.5; font-family: 'Jost', sans-serif; }
+    #input-area { padding: 10px 14px; background: var(--bg); border-top: 1px solid var(--border); display: flex; gap: 8px; flex-shrink: 0; }
+    #input { flex: 1; background: var(--surface); border: 1.5px solid var(--border); border-radius: 11px; padding: 9px 13px; color: var(--text); font-size: 14px; resize: none; outline: none; line-height: 1.5; font-family: 'Jost', sans-serif; }
+    #input:focus { border-color: var(--black); }
     #send-btn { border: none; border-radius: 11px; width: 42px; height: 42px; color: #fff; font-size: 17px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s; background: var(--border); }
     #send-btn.active-student { background: var(--blue); }
     #send-btn.active-teacher { background: var(--pumpkin); }
-    #send-btn:disabled { opacity: 0.4; cursor: default; }
+    #send-btn:disabled { opacity: 0.35; cursor: default; }
 
     @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
-    ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:transparent} ::-webkit-scrollbar-thumb{background:#333;border-radius:4px}
+    ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-track{background:transparent} ::-webkit-scrollbar-thumb{background:#ddd;border-radius:4px}
     textarea::-webkit-scrollbar{display:none}
   </style>
 </head>
 <body>
 
-<!-- SCREEN 1: MODE SELECT -->
+<!-- SCREEN 1: MODE -->
 <div class="screen active" id="screen-mode">
   <div class="ua-label">Urban Arts</div>
   <div class="screen-title">Game On:<br/><span>AP CSP through Game Design</span></div>
+  <div class="volt-bar"></div>
   <div class="screen-sub">Who are you today?</div>
   <div class="cards">
-    <div class="card blue" onclick="selectMode('student')">
+    <div class="card student" onclick="selectMode('student')">
       <div class="card-icon">🎮</div>
-      <div class="card-label" style="color:var(--blue)">I'm a Student</div>
-      <div class="card-desc">Get guided hints and Socratic support on Unity, C#, and AP CSP concepts</div>
+      <div class="card-accent"></div>
+      <div class="card-label">I'm a Student</div>
+      <div class="card-desc">Get support and hints on Unity, C#, and AP CSP concepts</div>
     </div>
-    <div class="card orange" onclick="selectMode('teacher')">
+    <div class="card teacher" onclick="selectMode('teacher')">
       <div class="card-icon">📋</div>
-      <div class="card-label" style="color:var(--pumpkin)">I'm a Teacher</div>
+      <div class="card-accent"></div>
+      <div class="card-label">I'm a Teacher</div>
       <div class="card-desc">Get direct answers, debugging help, and teaching strategies</div>
     </div>
   </div>
 </div>
 
-<!-- SCREEN 2: UNIT SELECT -->
+<!-- SCREEN 2: UNIT -->
 <div class="screen" id="screen-unit">
   <div class="ua-label">Urban Arts</div>
-  <div class="screen-title">Which <span>unit</span> are you on?</div>
-  <div class="screen-sub">I'll load the right curriculum files for you</div>
+  <div class="screen-title">Which <span>unit</span>?</div>
+  <div class="volt-bar"></div>
   <div class="unit-grid">
-    <div class="unit-btn all" onclick="selectUnit('all')">
-      <div class="u-num">All Units</div>
-      <div class="u-desc">General questions, all curriculum loaded</div>
-    </div>
     <div class="unit-btn" onclick="selectUnit('1')">
       <div class="u-num">01</div>
       <div class="u-label">Unit 1</div>
@@ -164,17 +171,25 @@
       <div class="u-desc">Systems, Networks & Impact</div>
     </div>
   </div>
-  <button class="back-btn" onclick="goBack('screen-mode')">← Back</button>
+  <button class="back-btn" onclick="showScreen('screen-mode')">← Back</button>
 </div>
 
-<!-- SCREEN 3: LOADING -->
+<!-- SCREEN 3: LESSON -->
+<div class="screen" id="screen-lesson">
+  <div class="ua-label">Urban Arts</div>
+  <div class="screen-title">Which <span>lesson</span>?</div>
+  <div class="volt-bar"></div>
+  <input type="text" id="lesson-search" placeholder="Search lessons…" oninput="filterLessons(this.value)" />
+  <div id="lesson-list-wrap"><div id="lesson-list"></div></div>
+  <button class="back-btn" onclick="showScreen('screen-unit')">← Back</button>
+</div>
+
+<!-- SCREEN 4: LOADING -->
 <div class="screen" id="loading">
-  <div id="loading-title">Loading Curriculum…</div>
-  <div id="loading-msg">Connecting to your Google Drive folder…</div>
+  <div id="loading-title">Loading…</div>
+  <div id="loading-msg">Fetching your lesson files…</div>
   <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
   <div id="loading-error"></div>
-  <button id="log-toggle" onclick="toggleLog()">▸ Show file log</button>
-  <div id="file-log"></div>
   <button id="retry-btn" onclick="retryLoad()">↻ Retry</button>
 </div>
 
@@ -183,12 +198,11 @@
   <div id="chat-header">
     <div id="chat-header-left">
       <span id="mode-badge">Mode</span>
-      <span id="unit-badge">Unit</span>
-      <div id="chat-title">Game On: AP CSP through Game Design</div>
+      <span id="context-badge">Lesson</span>
     </div>
     <div id="chat-actions">
-      <button class="hdr-btn" onclick="goToUnitSelect()">⇄ Unit</button>
-      <button class="hdr-btn" onclick="goBack('screen-mode')">⇄ Mode</button>
+      <button class="hdr-btn" onclick="showScreen('screen-lesson')">⇄ Lesson</button>
+      <button class="hdr-btn" onclick="showScreen('screen-mode')">⇄ Mode</button>
     </div>
   </div>
   <div id="messages"></div>
@@ -206,224 +220,193 @@
 <script>
 const PROXY = '/api/curriculum';
 const API_URL = 'https://api.anthropic.com/v1/messages';
-
-// Files that always load regardless of unit
-const SHARED_PATH_KEYWORDS = ['activities', 'worksheets', 'common errors', 'common questions', 'program tools'];
-
-const UNIT_DESCRIPTIONS = {
-  '1': 'Unit 1 — Intro to Unity & Game Design',
-  '2': 'Unit 2 — Variables, Data & Logic',
-  '3': 'Unit 3 — Algorithms & Programming',
-  '4': 'Unit 4 — Systems, Networks & Impact',
-  'all': 'All Units'
-};
+const SHARED_KEYWORDS = ['activities', 'worksheets', 'common errors', 'common questions', 'program tools', 'student guides'];
 
 const STUDENT_SYSTEM = `You are an expert tutor for "Game On: AP CSP through Game Design" at Urban Arts, a national program. Students are in grades 9-12.
 
-SOCRATIC METHOD — never give direct answers:
-- Ask guiding questions that lead students to discover answers themselves
-- Break complex problems into smaller questions
+Guide students to discover answers themselves — never give answers directly:
+- Ask guiding questions that lead students to the solution
+- Break complex problems into smaller steps
 - Celebrate correct reasoning
 - Give hints as questions, not answers
 - Connect concepts to game design examples
 
-Use the attached curriculum documents as your primary reference. Stay scoped to this curriculum.
+Use the attached curriculum documents as your primary reference.
 Tone: warm, encouraging, curious. Use game design analogies.
-Format: short paragraphs, C# code in markdown code blocks. Keep responses concise.
+Format: short paragraphs, C# in markdown code blocks. Keep responses concise.
 Always end with a question that moves the student forward.`;
 
-const TEACHER_SYSTEM = `You are an expert teaching assistant for "Game On: AP CSP through Game Design" at Urban Arts, a national program. You support teachers directly.
+const TEACHER_SYSTEM = `You are an expert teaching assistant for "Game On: AP CSP through Game Design" at Urban Arts, a national program.
 
 Give DIRECT, CLEAR answers. Teachers need fast, actionable help.
-You specialize in:
-- Debugging Unity and C# errors (NullReferenceException, MissingReferenceException, CS errors, etc.)
-- Explaining AP CSP concepts in simple terms with good analogies
-- Suggesting Socratic hints for students WITHOUT giving away the answer
-- Unity file management issues
+Specialize in:
+- Debugging Unity/C# errors (NullReferenceException, MissingReferenceException, CS errors, etc.)
+- Explaining AP CSP concepts simply with good analogies
+- Suggesting Socratic hints for students without giving away answers
+- Unity file management
 - Teaching strategies for game design concepts
-- Step-by-step error interpretation
 
-Common issues: NullReferenceException, MissingReferenceException, missing semicolons, type conversion errors, OnCollisionEnter not firing, Input.GetKeyDown not working, GameObject not moving, UI not showing, Visual Studio not opening, student can't find Unity project.
+Common issues: NullReferenceException, MissingReferenceException, semicolon errors, type conversion, OnCollisionEnter not firing, Input.GetKeyDown not working, GameObject not moving, UI not showing, Visual Studio not opening, student can't find Unity project.
 
-Use attached curriculum as reference for lesson-specific questions.
 Tone: collegial, practical, efficient. Use numbered steps for debugging.`;
 
-const STUDENT_SUGGESTIONS = [
-  "My player falls through the floor 😭",
-  "What's a variable vs a component?",
-  "How do I make an enemy follow the player?",
-  "I don't get what a loop does",
-  "Why won't my score update?"
-];
+const STUDENT_SUGGESTIONS = ["My player falls through the floor 😭","What's a variable vs a component?","How do I make an enemy follow the player?","I don't get what a loop does","Why won't my score update?"];
+const TEACHER_SUGGESTIONS = ["Student getting NullReferenceException","Good analogy for variables?","Student's collision isn't working","Hints for loops without giving it away","Student can't find their Unity project"];
 
-const TEACHER_SUGGESTIONS = [
-  "Student getting NullReferenceException",
-  "Good analogy for variables?",
-  "Student's collision isn't working",
-  "Hints for loops without giving it away",
-  "Student can't find their Unity project"
-];
-
-let mode = null;
-let unit = null;
-let allFiles = [];
-let loadedFiles = [];
-let messages = [];
-let logEntries = [];
-let showingLog = false;
+let mode = null, unit = null, selectedLesson = null;
+let allFiles = [], loadedFiles = [], messages = [];
+let allLessons = [], filteredLessons = [];
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('chat-screen').style.display = 'none';
-  if (id === 'chat') {
-    document.getElementById('chat-screen').style.display = 'flex';
-  } else {
-    document.getElementById(id).classList.add('active');
-  }
+  if (id === 'chat') { document.getElementById('chat-screen').style.display = 'flex'; }
+  else { document.getElementById(id).classList.add('active'); }
+  if (id === 'screen-mode' || id === 'screen-unit') { messages = []; loadedFiles = []; }
 }
 
-function goBack(screenId) {
-  messages = [];
-  showScreen(screenId);
-}
+function selectMode(m) { mode = m; showScreen('screen-unit'); }
 
-function goToUnitSelect() {
-  messages = [];
-  showScreen('screen-unit');
-}
-
-function selectMode(m) {
-  mode = m;
-  showScreen('screen-unit');
-}
-
-function selectUnit(u) {
+async function selectUnit(u) {
   unit = u;
-  showScreen('loading');
-  loadCurriculum();
-}
-
-function retryLoad() { loadCurriculum(); }
-
-function isSharedFile(f) {
-  const p = (f.path + '/' + f.name).toLowerCase();
-  return SHARED_PATH_KEYWORDS.some(k => p.includes(k));
-}
-
-function isUnitFile(f, u) {
-  const p = (f.path + '/' + f.name).toLowerCase();
-  return p.includes(`unit ${u}`) || p.includes(`unit${u}`);
-}
-
-function filterFiles(files, u) {
-  if (u === 'all') return files;
-  return files.filter(f => isSharedFile(f) || isUnitFile(f, u));
-}
-
-function setMsg(t) { document.getElementById('loading-msg').textContent = t; }
-function setError(t) { const el = document.getElementById('loading-error'); el.textContent = t; el.style.display = t ? 'block' : 'none'; }
-
-function addLog(entry) {
-  logEntries.push(entry);
-  const log = document.getElementById('file-log');
-  const div = document.createElement('div');
-  div.textContent = entry;
-  div.style.color = entry.startsWith('✗') ? '#f08080' : '#C4E44A';
-  log.appendChild(div);
-  log.scrollTop = log.scrollHeight;
-  document.getElementById('log-toggle').style.display = 'block';
-}
-
-function toggleLog() {
-  showingLog = !showingLog;
-  document.getElementById('file-log').style.display = showingLog ? 'block' : 'none';
-  document.getElementById('log-toggle').textContent =
-    (showingLog ? '▾ Hide' : '▸ Show') + ` file log (${logEntries.length})`;
-}
-
-async function loadCurriculum() {
-  document.getElementById('loading-error').style.display = 'none';
-  document.getElementById('retry-btn').style.display = 'none';
-  document.getElementById('file-log').innerHTML = '';
-  document.getElementById('log-toggle').style.display = 'none';
-  logEntries = []; loadedFiles = [];
-
-  try {
-    // Only fetch file list once; cache it
-    if (!allFiles.length) {
-      setMsg('Scanning curriculum folder…');
+  // Fetch file list if not cached
+  if (!allFiles.length) {
+    showScreen('loading');
+    document.getElementById('loading-msg').textContent = 'Scanning curriculum folder…';
+    try {
       const res = await fetch(`${PROXY}?action=list`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       allFiles = data.files || [];
-      if (!allFiles.length) throw new Error('No supported files found.');
+    } catch(e) {
+      document.getElementById('loading-error').textContent = e.message;
+      document.getElementById('loading-error').style.display = 'block';
+      document.getElementById('retry-btn').style.display = 'block';
+      return;
     }
+  }
+  buildLessonList(u);
+  showScreen('screen-lesson');
+}
 
-    const filtered = filterFiles(allFiles, unit);
-    addLog(`✓ Loading ${filtered.length} file(s) for ${UNIT_DESCRIPTIONS[unit]}`);
+function buildLessonList(u) {
+  // Get lesson files for this unit
+  const unitFiles = allFiles.filter(f => {
+    const p = (f.path + '/' + f.name).toLowerCase();
+    return (p.includes(`unit ${u}/`) || p.includes(`unit${u}/`)) && p.includes('lesson');
+  });
 
-    for (let i = 0; i < filtered.length; i++) {
-      const f = filtered[i];
-      setMsg(`Loading ${i + 1} of ${filtered.length}: ${f.name}…`);
-      try {
-        const r = await fetch(`${PROXY}?action=fetch&fileId=${encodeURIComponent(f.id)}&mimeType=${encodeURIComponent(f.mimeType)}`);
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        const d = await r.json();
-        if (d.error) throw new Error(d.error);
-        loadedFiles.push({ name: f.name, base64: d.base64 });
-        addLog(`✓ ${f.name}`);
-      } catch(e) {
-        addLog(`✗ ${f.name} — ${e.message}`);
-      }
+  // Sort by lesson number
+  unitFiles.sort((a, b) => {
+    const na = parseInt(a.name.replace(/\D/g, '')) || 0;
+    const nb = parseInt(b.name.replace(/\D/g, '')) || 0;
+    return na - nb;
+  });
+
+  allLessons = unitFiles;
+  filteredLessons = unitFiles;
+  document.getElementById('lesson-search').value = '';
+  renderLessons(unitFiles);
+}
+
+function renderLessons(files) {
+  const list = document.getElementById('lesson-list');
+  list.innerHTML = '';
+
+  if (!files.length) {
+    list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:13px">No lessons found for this unit.</div>';
+    return;
+  }
+
+  // Section header
+  const hdr = document.createElement('div');
+  hdr.className = 'lesson-section-header';
+  hdr.textContent = `Unit ${unit} Lessons`;
+  list.appendChild(hdr);
+
+  files.forEach(f => {
+    const item = document.createElement('div');
+    item.className = 'lesson-item';
+    item.innerHTML = `
+      <div>
+        <div class="l-name">${f.name}</div>
+        <div class="l-path">${f.path}</div>
+      </div>
+      <div class="l-arrow">→</div>`;
+    item.onclick = () => selectLesson(f);
+    list.appendChild(item);
+  });
+}
+
+function filterLessons(query) {
+  const q = query.toLowerCase();
+  filteredLessons = allLessons.filter(f => f.name.toLowerCase().includes(q));
+  renderLessons(filteredLessons);
+}
+
+async function selectLesson(lessonFile) {
+  selectedLesson = lessonFile;
+  showScreen('loading');
+  document.getElementById('loading-msg').textContent = `Loading ${lessonFile.name}…`;
+  document.getElementById('loading-error').style.display = 'none';
+  document.getElementById('retry-btn').style.display = 'none';
+  loadedFiles = [];
+
+  // Files to load: selected lesson + shared files
+  const sharedFiles = allFiles.filter(f => {
+    const p = (f.path + '/' + f.name).toLowerCase();
+    return SHARED_KEYWORDS.some(k => p.includes(k));
+  });
+
+  const toLoad = [lessonFile, ...sharedFiles];
+
+  try {
+    for (let i = 0; i < toLoad.length; i++) {
+      const f = toLoad[i];
+      document.getElementById('loading-msg').textContent = `Loading ${i+1} of ${toLoad.length}: ${f.name}…`;
+      const r = await fetch(`${PROXY}?action=fetch&fileId=${encodeURIComponent(f.id)}&mimeType=${encodeURIComponent(f.mimeType)}`);
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const d = await r.json();
+      if (d.error) throw new Error(d.error);
+      loadedFiles.push({ name: f.name, base64: d.base64 });
     }
-
-    if (!loadedFiles.length) throw new Error('Files found but none could be loaded. Check folder sharing permissions.');
     startChat();
-
   } catch(e) {
-    setMsg('Failed to load curriculum.');
-    setError(e.message);
+    document.getElementById('loading-msg').textContent = 'Failed to load files.';
+    document.getElementById('loading-error').textContent = e.message;
+    document.getElementById('loading-error').style.display = 'block';
     document.getElementById('retry-btn').style.display = 'block';
   }
 }
 
+function retryLoad() { if (selectedLesson) selectLesson(selectedLesson); }
+
 function startChat() {
-  // Update header badges
   const badge = document.getElementById('mode-badge');
-  badge.textContent = mode === 'student' ? 'Student Mode' : 'Teacher Mode';
+  badge.textContent = mode === 'student' ? 'Student' : 'Teacher';
   badge.className = mode;
-  document.getElementById('unit-badge').textContent = unit === 'all' ? 'All Units' : `Unit ${unit}`;
-
-  // Typing indicator
+  document.getElementById('context-badge').textContent = selectedLesson?.name || 'General';
   const ta = document.getElementById('typing-avatar');
-  ta.style.background = mode === 'student' ? 'var(--blue)' : 'var(--pumpkin)';
+  ta.style.background = mode === 'student' ? 'var(--volt)' : 'var(--pumpkin)';
+  ta.style.color = mode === 'student' ? 'var(--black)' : '#fff';
   ta.textContent = 'AI';
-  const dots = document.querySelectorAll('#typing-bubble span');
-  dots.forEach(d => d.style.background = mode === 'student' ? 'var(--blue)' : 'var(--pumpkin)');
-
-  // Input placeholder
   document.getElementById('input').placeholder = mode === 'student'
-    ? 'Ask about a lesson, project, or concept…'
-    : 'Ask about debugging, teaching strategies, or curriculum…';
-
-  // Clear messages
+    ? 'Ask about this lesson or concept…'
+    : 'Ask about debugging, teaching strategies, or this lesson…';
   document.getElementById('messages').innerHTML = '';
   messages = [];
 
-  const unitLabel = unit === 'all' ? 'any unit' : `Unit ${unit}`;
   const greeting = mode === 'student'
-    ? `Hey! 👋 I'm your Game On tutor for ${unitLabel}. I won't just hand you answers — we'll figure things out together.\n\nWhat are you working on or stuck on today?`
-    : `Hey! 👋 I'm your Game On teaching assistant for ${unitLabel}. Ask me anything — debugging, concept explanations, teaching strategies, or curriculum questions.\n\nWhat do you need?`;
+    ? `Hey! 👋 I'm your Game On tutor. I've loaded **${selectedLesson?.name}** — let's work through it together.\n\nWhat are you working on or stuck on?`
+    : `Hey! 👋 I'm your Game On teaching assistant. I've loaded **${selectedLesson?.name}** plus shared resources.\n\nWhat do you need?`;
 
   appendMessage('assistant', greeting);
   messages.push({ role: 'assistant', content: greeting });
 
-  // Suggestions
   const sugEl = document.getElementById('suggestions');
   sugEl.innerHTML = '';
-  const sugs = mode === 'student' ? STUDENT_SUGGESTIONS : TEACHER_SUGGESTIONS;
-  sugs.forEach(s => {
+  (mode === 'student' ? STUDENT_SUGGESTIONS : TEACHER_SUGGESTIONS).forEach(s => {
     const btn = document.createElement('button');
     btn.className = `suggestion ${mode}`;
     btn.textContent = s;
@@ -437,16 +420,15 @@ function startChat() {
 function appendMessage(role, content) {
   const el = document.getElementById('messages');
   const div = document.createElement('div');
-  div.className = `msg ${role}${role === 'user' ? ' ' + mode : ''}`;
-
+  div.className = `msg ${role}${role === 'user' ? ' '+mode : ''}`;
   if (role === 'assistant') {
     const av = document.createElement('div');
     av.className = `msg-avatar ${mode}`;
-    av.style.background = mode === 'student' ? 'var(--blue)' : 'var(--pumpkin)';
+    av.style.background = mode === 'student' ? 'var(--volt)' : 'var(--pumpkin)';
+    av.style.color = mode === 'student' ? 'var(--black)' : '#fff';
     av.textContent = 'AI';
     div.appendChild(av);
   }
-
   const bubble = document.createElement('div');
   bubble.className = 'msg-bubble';
   bubble.innerHTML = formatContent(content);
@@ -465,17 +447,12 @@ function formatContent(text) {
   }).join('');
 }
 
-function esc(t) {
-  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+function esc(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function buildApiMessages() {
   return messages.map((m, i) => {
     if (m.role === 'user' && i === messages.length - 1 && loadedFiles.length > 0) {
-      const docs = loadedFiles.map(f => ({
-        type: 'document',
-        source: { type: 'base64', media_type: 'application/pdf', data: f.base64 }
-      }));
+      const docs = loadedFiles.map(f => ({ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: f.base64 } }));
       return { role: 'user', content: [...docs, { type: 'text', text: m.content }] };
     }
     return { role: m.role, content: m.content };
@@ -489,23 +466,18 @@ async function sendMessage(text) {
   input.value = '';
   updateSendBtn('');
   document.getElementById('suggestions').innerHTML = '';
-
   messages.push({ role: 'user', content: userMsg });
   appendMessage('user', userMsg);
-
   const typing = document.getElementById('typing');
   typing.style.display = 'flex';
   document.getElementById('messages').scrollTop = 99999;
-
   try {
-    const system = mode === 'student' ? STUDENT_SYSTEM : TEACHER_SYSTEM;
     const res = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system,
+        model: 'claude-sonnet-4-20250514', max_tokens: 1000,
+        system: mode === 'student' ? STUDENT_SYSTEM : TEACHER_SYSTEM,
         messages: buildApiMessages()
       })
     });
